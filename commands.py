@@ -1,4 +1,5 @@
 import discord
+import asyncio
 from string_set import *
 from dev import *
 
@@ -27,4 +28,23 @@ def handle_commands(message, command, args):
         return cmd_quotes(message, args)
     if command == 'dev':
         return cmd_dev(message, args)
+    if command == 'help': 
+        asyncio.ensure_future(cmd_help(message))
+        return ''
 
+async def cmd_help(message):
+    help_msg = '''\
+```Kriegerbund Bot Help```
+```Commands:
+
+![command] help: Returns help for the specific command
+
+!ping: Pong!
+
+!quote and !zitat: Quote function, default: random quote
+
+!dev: Development tools for reporting bugs and requesting
+features```'''
+    if message.author.dm_channel is None:
+        await message.author.create_dm()
+    await message.author.dm_channel.send(help_msg)
