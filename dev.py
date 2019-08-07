@@ -2,11 +2,11 @@ from git import *
 
 
 def dev_help():
-    return '''Usage:\n
-    !dev help: This command\n
+    return '''Usage:
+    !dev help: This command
     !dev request name [--description description]
     e.g.: !dev request Cool Feature --description This feature would be really
-    cool and awesome.\n
+    cool and awesome.
     !dev bugreport bug [--description description]
     e.g.: !dev bugreport Bug --description This bug is really awful :('''
 
