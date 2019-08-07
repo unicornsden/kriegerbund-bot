@@ -40,12 +40,12 @@ def handle_commands(message, command, args):
 <:kriegerbund:352935520579616768> **Hallo Kriegerbund!** <:kriegerbund:352935520579616768>
 
 Ich bin der neue, hauseigene Kriegerbund-Bot.
-Wenn ihr wissen möchtet, was ich so kann, dann schreibt doch einfach `!help` in einen geeigneten Chat (aber vorsicht, andere Bots streiten sich vielleicht darum wer antworten darf).
+Wenn ihr wissen möchtet, was ich so kann, dann schreibt doch einfach `!help` in einen geeigneten Chat (aber vorsicht, andere Bots streiten sich vielleicht mit mir darum wer antworten darf).
 
 Bisher kann ich leider noch sehr wenig. Wenn ihr Ideen/Vorschläge habt, was für Funktionen ich so bekommen soll, dann benutzt doch bitte das `!dev` Kommando.
 Wenn ihr einen Bug entdeckt, könnt ihr diesen mit `!dev` ebenfalls reporten.
 
-Was ihr in der Zwischenzeit schon einmal ausprobieren könnt sind:
+Was ihr in der Zwischenzeit schon ausprobieren könnt:
 !zitat
 und
 !dice
