@@ -3,7 +3,7 @@ from git import *
 
 def dev_help():
     return '''\
-Usage:
+```Usage:
   
   !dev help: This command
   
@@ -11,7 +11,7 @@ Usage:
   e.g.: !dev request Cool Feature --description This feature would be really cool and awesome.
   
   !dev bugreport bug [--description description]
-  e.g.: !dev bugreport Bug --description This bug is really awful :('''
+  e.g.: !dev bugreport Bug --description This bug is really awful :(```'''
 
 
 def dev_issue(message, split, label):
