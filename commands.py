@@ -35,7 +35,7 @@ def handle_commands(message, command, args):
     if command == 'help': 
         asyncio.ensure_future(cmd_help(message))
         return ''
-    if command =='load':
+    if command == 'load' or command == 'loading':
         asyncio.ensure_future(cmd_load(message, 0))
     if command == 'hallo':
         if check_permissions(message):
