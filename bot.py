@@ -10,7 +10,6 @@ from commands import *
 from dev import *
 
 CMDCHAR = '!'
-
 TOKEN = sys.argv[1]
 client = discord.Client()
 

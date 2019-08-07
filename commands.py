@@ -34,6 +34,25 @@ def handle_commands(message, command, args):
     if command == 'help': 
         asyncio.ensure_future(cmd_help(message))
         return ''
+    if command == 'hallo':
+        if check_permissions(message):
+            return '''\
+<:kriegerbund:352935520579616768> **Hallo Kriegerbund!** <:kriegerbund:352935520579616768>
+
+Ich bin der neue, hauseigene Kriegerbund-Bot.
+Wenn ihr wissen möchtet, was ich so kann, dann schreibt doch einfach `!help` in einen geeigneten Chat (aber vorsicht, andere Bots streiten sich vielleicht darum wer antworten darf).
+
+Bisher kann ich leider noch sehr wenig. Wenn ihr Ideen/Vorschläge habt, was für Funktionen ich so bekommen soll, dann benutzt doch bitte das `!dev` Kommando.
+Wenn ihr einen Bug entdeckt, könnt ihr diesen mit `!dev` ebenfalls reporten.
+
+Was ihr in der Zwischenzeit schon einmal ausprobieren könnt sind:
+!zitat
+und
+!dice
+
+Für die Horde! <:horde:334814213828771850>'''
+        else:
+            return 'Hi, {0.author.mention}!'
 
 
 async def cmd_help(message):
@@ -46,6 +65,8 @@ async def cmd_help(message):
 !ping: Pong!
 
 !quote and !zitat: Quote function, default: random quote
+
+!dice and !roll: Rolls dice.
 
 !dev: Development tools for reporting bugs and requesting
 features```'''
