@@ -33,7 +33,7 @@ async def on_message(message):
     except:
         msg = '''\
 Something went wrong.
-This is so sad. Alexa, Play Despacito!'''
+This is so sad. Alexa, play Despacito!'''
 
 
     if not msg:
