@@ -1,15 +1,18 @@
-# Work with Python 3.6
+# discord bot - main application
 import discord
 import random
 import subprocess
 import os
 import sys
+from utils import *
+from commands import *
 
 CMDCHAR = '!'
 DATA = '/data'
 
 TOKEN = sys.argv[1]
 client = discord.Client()
+
 
 def represents_int(s):
     try: 
@@ -18,17 +21,17 @@ def represents_int(s):
     except ValueError:
         return False
 
+
 def check_permissions(message):
-    if message.author.permissions_in(message.channel).kick_members == True:
+    if message.author.permissions_in(message.channel).kick_members:
         return True
     return False
 
-def get_server_id(message):
-    return str(message.guild.id)
 
 def get_path(name, message):
     path = DATA + '/' + get_server_id(message) + '_' + name + '.txt'
     return path
+
 
 def get_quotes(message):
     if not os.path.exists(get_path("quotes", message)):
@@ -57,7 +60,7 @@ def add_quote(quote_list, message):
     return "Added quote:\n" + quote
 
 
-def quotes(args, message):
+def cmd_quotes(args, message):
     if len(args) == 0:
         return random_quote(message)
     if args[0] == "path":
@@ -87,35 +90,24 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if not message.content.startswith(CMDCHAR):
+    command = get_command(CMDCHAR, message)
+
+    if command is None:
         return
 
-    input_list = message.content.split(' ')
-    command = input_list[0]
-    command = command[1:]
-
-    args = list()
-    
-    if len(input_list) > 1:
-        args = input_list[1:]
+    args = get_args(message)
 
     if command == "ping":
         msg = 'Pong! {0.author.mention}'
     
     if command == "zitat" or command == "quote":
-        msg = quotes(args, message)
-
-    if command == "perm":
-        if len(args) != 2:
-            msg = "Error: Unexpected argument count."
-        if len(args) == 2 and args[0] == "add":
-            add_permissions(args[1], message)
-            msg = "Added " + args[1] + " to permissions."
+        msg = cmd_quotes(args, message)
 
     msg = msg.format(message)
 
     await message.channel.send(msg) 
-    
+
+
 @client.event
 async def on_ready():
     if os.path.exists("/data"):
