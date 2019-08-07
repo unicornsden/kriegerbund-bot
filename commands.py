@@ -2,6 +2,7 @@ import discord
 import asyncio
 from string_set import *
 from dev import *
+import dice
 
 
 def get_command(message, signs):
@@ -26,11 +27,14 @@ def handle_commands(message, command, args):
         return ping()
     if command == 'zitat' or command == 'quote':
         return cmd_quotes(message, args)
+    if command == 'roll':
+        return dice.cmd_roll(message, args)
     if command == 'dev':
         return cmd_dev(message, args)
     if command == 'help': 
         asyncio.ensure_future(cmd_help(message))
         return ''
+
 
 async def cmd_help(message):
     help_msg = '''\
