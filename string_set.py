@@ -65,5 +65,22 @@ def cmd_quotes(message, args):
         qid = int(args[0])
         if qid > len(quotes) or qid == 0:
             return "Error: Not a valid quote #id"
-        print(quotes) 
         return quotes[qid - 1]
+
+    if args[0] == 'help':
+        return string_set_help(message)
+
+
+def string_set_help(message):
+    return '''\
+```Usage:
+
+  !zitat or !quote
+
+  !zitat: Random quote.
+  
+  !zitat #num: Quote #1.
+  
+  !zitat add zitat: Adds a new quote on this server. Requires mod privileges.
+
+  !zitat all: Lists all quotes.```'''
