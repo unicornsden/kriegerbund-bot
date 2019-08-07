@@ -1,5 +1,6 @@
 import discord
 import asyncio
+import time
 from string_set import *
 from dev import *
 import dice
@@ -34,6 +35,8 @@ def handle_commands(message, command, args):
     if command == 'help': 
         asyncio.ensure_future(cmd_help(message))
         return ''
+    if command =='load':
+        asyncio.ensure_future(cmd_load(message, 0))
     if command == 'hallo':
         if check_permissions(message):
             return '''\
@@ -73,3 +76,24 @@ features```'''
     if message.author.dm_channel is None:
         await message.author.create_dm()
     await message.author.dm_channel.send(help_msg)
+
+
+async def cmd_load(message, count, max_count=20):
+    msg = '`Loading .'
+    if count == 0:
+        new_msg = (await message.channel.send(msg + '`'))
+        asyncio.ensure_future(cmd_load(new_msg, 1))
+        return
+    if count >= max_count:
+        time.sleep(2)
+        await message.edit(content='lul, just kidding, nothing\'s gonna happen')
+        return
+    time.sleep(0.5)
+    for _ in range(count):
+        msg += '.'
+    msg += '`'
+    await message.edit(content=msg)
+    asyncio.ensure_future(cmd_load(message, count+1))
+
+
+

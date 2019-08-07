@@ -34,7 +34,6 @@ async def on_message(message):
 Something went wrong.
 This is so sad. Alexa, play Despacito!'''
 
-
     if not msg:
         return
 
