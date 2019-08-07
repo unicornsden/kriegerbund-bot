@@ -1,7 +1,7 @@
 import random
 import os
 from storage import *
-
+from utils import *
 
 #
 # ACCESS STRINGS
@@ -31,7 +31,10 @@ def random_quote(message):
 def add_quote(quote_list, message):
     if not check_permissions(message):
         return "You do not have permissions to add quotes."
-    f = open(get_path(message, "quotes" ),'a+')
+    if not os.path.isfile(get_path(message, "quotes")):
+        f = open(get_path(message, "quotes"),'w+')
+    else:
+        f = open(get_path(message, "quotes" ),'a+')
     quote = ""
     for s in quote_list:
         quote += s + ' '
@@ -39,7 +42,7 @@ def add_quote(quote_list, message):
     return "Added quote:\n" + quote
 
 
-def cmd_quotes(args, message):
+def cmd_quotes(message, args):
     if len(args) == 0:
         return random_quote(message)
     if args[0] == "path":
@@ -50,6 +53,7 @@ def cmd_quotes(args, message):
         if len(args) < 2:
             return "Error: Not enough arguments."
         return add_quote(args[1:], message)
+
     if args[0] == "all":
         quotes = get_quotes(message)
         msg = ""
@@ -61,4 +65,5 @@ def cmd_quotes(args, message):
         qid = int(args[0])
         if qid > len(quotes) or qid == 0:
             return "Error: Not a valid quote #id"
+        print(quotes) 
         return quotes[qid - 1]

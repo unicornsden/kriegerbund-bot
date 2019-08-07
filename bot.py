@@ -4,15 +4,17 @@ import random
 import subprocess
 import os
 import sys
+import settings
 from utils import *
 from commands import *
+from dev import *
 
 CMDCHAR = '!'
-DATA = '/data'
 
 TOKEN = sys.argv[1]
 client = discord.Client()
 
+settings.init()
 
 def represents_int(s):
     try: 
@@ -90,18 +92,17 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    command = get_command(CMDCHAR, message)
+    command = get_command(message, CMDCHAR)
 
     if command is None:
         return
 
     args = get_args(message)
 
-    if command == "ping":
-        msg = 'Pong! {0.author.mention}'
-    
-    if command == "zitat" or command == "quote":
-        msg = cmd_quotes(args, message)
+    msg = handle_commands(message, command, args)
+
+    if not msg:
+        return
 
     msg = msg.format(message)
 
@@ -110,7 +111,7 @@ async def on_message(message):
 
 @client.event
 async def on_ready():
-    if os.path.exists("/data"):
+    if os.path.exists(settings.DATA):
         print('data already exists')
     else:
         subprocess.run(['bash', 'create_env.sh'])
