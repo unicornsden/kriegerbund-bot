@@ -27,7 +27,7 @@ def handle_commands(message, command, args):
         return ping()
     if command == 'zitat' or command == 'quote':
         return cmd_quotes(message, args)
-    if command == 'roll':
+    if command == 'roll' or command == 'dice':
         return dice.cmd_roll(message, args)
     if command == 'dev':
         return cmd_dev(message, args)

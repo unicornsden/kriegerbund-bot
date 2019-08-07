@@ -9,7 +9,9 @@ def cmd_roll(message, args):
         return '''\
 ```Usage:
 
-  !roll XdY or !roll XwY
+  !dice or !roll
+
+  !dice XdY or !roll XwY
   e.g.: !roll 5d6```'''
     return roll_dice_str(message, args)
 
@@ -34,22 +36,22 @@ def roll_dice(count, type):
 
 def roll_dice_str(message, args):
     if len(args) != 1:
-        return 'Not a valid !roll command. Try !roll help'
+        return 'Not a valid !roll/dice command. Try !dice help'
 
     if 'd' in args[0]:
         split = 'd'
     elif 'w' in args[0]:
         split = 'w'
     else:
-        return 'Not a valid !roll command. Try !roll help'
+        return 'Not a valid !roll/dice command. Try !dice help'
 
     dice = args[0].split(split)
 
     if len(dice) != 2:
-        return 'Not a valid !roll command. Try !roll help'
+        return 'Not a valid !roll/dice command. Try !dice help'
 
     if (not represents_int(dice[0])) or (not represents_int(dice[1])):
-        return 'Not a valid !roll command. Try !roll help'
+        return 'Not a valid !roll/dice command. Try !dice help'
 
     count = int(dice[0])
     type = int(dice[1])
