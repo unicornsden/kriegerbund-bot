@@ -49,9 +49,9 @@ Bisher kann ich leider noch sehr wenig. Wenn ihr Ideen/Vorschläge habt, was fü
 Wenn ihr einen Bug entdeckt, könnt ihr diesen mit `!dev` ebenfalls reporten.
 
 Was ihr in der Zwischenzeit schon ausprobieren könnt:
-!zitat
+`!zitat`
 und
-!dice
+`!dice`
 
 Für die Horde! <:horde:334814213828771850>'''
         else:
