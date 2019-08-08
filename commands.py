@@ -4,6 +4,7 @@ import time
 from string_set import *
 from dev import *
 import dice
+import user_settings
 
 
 def get_command(message, signs):
@@ -24,8 +25,10 @@ def get_args(message):
 
 
 def handle_commands(message, command, args):
+    #if command == 'test':
+    #    return cmd_test(message, args)
     if command == 'ping':
-        return ping()
+        return ping(message)
     if command == 'zitat' or command == 'quote':
         return cmd_quotes(message, args)
     if command == 'roll' or command == 'dice':
@@ -39,6 +42,8 @@ def handle_commands(message, command, args):
         asyncio.ensure_future(cmd_load(message, 0))
     if command == 'github':
         return 'https://github.com/enkejill/kriegerbund-bot'
+    if command == 'user':
+        return cmd_user(message, args)
     if command == 'hallo':
         if check_permissions(message):
             return '''\
@@ -98,4 +103,5 @@ async def cmd_load(message, count, max_count=20):
     asyncio.ensure_future(cmd_load(message, count+1))
 
 
-
+def cmd_test(message, args):
+    return str(message.author.id)

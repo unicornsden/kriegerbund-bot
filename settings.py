@@ -1,5 +1,6 @@
 import os
 
+
 def init():
     global DATA
     if os.path.isfile("datapath"):

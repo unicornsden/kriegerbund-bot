@@ -1,6 +1,7 @@
 import settings
 from utils import *
 
+
 def get_path(message, name):
     path = settings.DATA + '/' + get_server_id(message) + '_' + name + '.txt'
     return path
