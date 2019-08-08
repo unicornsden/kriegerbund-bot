@@ -1,6 +1,7 @@
 # discord bot - main application
 import discord
 import random
+import traceback
 import subprocess
 import os
 import sys
@@ -52,5 +53,5 @@ async def on_ready():
         print('data created')
 
 for f in os.listdir('./'):
-    print(f)
+    traceback.print_exc(f)
 client.run(TOKEN)
