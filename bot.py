@@ -52,6 +52,4 @@ async def on_ready():
         subprocess.run(['bash', 'create_env.sh'])
         print('data created')
 
-for f in os.listdir('./'):
-    traceback.print_exc(f)
 client.run(TOKEN)
