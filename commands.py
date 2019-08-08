@@ -37,6 +37,8 @@ def handle_commands(message, command, args):
         return ''
     if command == 'load' or command == 'loading':
         asyncio.ensure_future(cmd_load(message, 0))
+    if command == 'github':
+        return 'https://github.com/enkejill/kriegerbund-bot'
     if command == 'hallo':
         if check_permissions(message):
             return '''\
