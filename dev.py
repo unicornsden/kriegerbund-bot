@@ -6,21 +6,35 @@ def dev_help():
 ```Usage:
   
   !dev help: This command
+ 
+  !dev request name [description...] 
+  or
+  !dev request "really long name" [description...]
   
-  !dev request name [--description description]
-  e.g.: !dev request Cool Feature --description This feature would be really cool and awesome.
-  
-  !dev bugreport bug [--description description]
-  e.g.: !dev bugreport Bug --description This bug is really awful :(```'''
+  !dev bugreport name [description...] 
+  or
+  !dev bugreport "really long name" [description...]
+  ```'''
 
 
 def dev_issue(message, split, label):
-    name = message.content.split(split, 1)[1].split('--description', 1)[0]
-    if '--description' in message.content:
-        description = message.content.split('--description')[1]
+    content = message.content.split(split, 1)[1].strip()
+    if content[0] == '\"':
+        splits = content[1:].split('\"', 1)
+        name = splits[0]
+        description = splits[1]
     else:
-        description = None
-    
+        splits = content.split(' ', 1)
+        name = splits[0]
+        description = splits[1]
+
+    # name = message.content.split(split, 1)[1].split('--description', 1)[0]
+    # if '--description' in message.content:
+    #     description = message.content.split('--description')[1]
+    # else:
+    #     description = None
+    description = '[Issue created by {user}]\n'.format(user=message.author.name) + description
+
     make_github_issue(name, description, label)
 
     return "Issue added!"
