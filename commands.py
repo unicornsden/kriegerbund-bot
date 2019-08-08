@@ -1,4 +1,5 @@
 import discord
+import storage
 import asyncio
 import time
 from string_set import *
@@ -104,4 +105,4 @@ async def cmd_load(message, count, max_count=20):
 
 
 def cmd_test(message, args):
-    return str(message.author.id)
+    return ''
