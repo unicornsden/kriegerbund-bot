@@ -1,4 +1,5 @@
 from git import *
+from message_builder import *
 
 
 def dev_help():
@@ -42,13 +43,13 @@ def dev_issue(message, split, label):
 
 def cmd_dev(message, args):
     if len(args) == 0:
-        return "Not enough arguments, run !dev help for more information"
+        return MessageCode.UNKNOWN_ARGS
     if args[0] == 'help':
         return dev_help()
     if len(args) < 2:
-        return "Not enough arguments, run !dev help for more information"
+        return MessageCode.UNKNOWN_ARGS
     if args[0] == 'request':
         return dev_issue(message, args[0], 'enhancement')
     if args[0] == 'bugreport':
         return dev_issue(message, args[0], 'bug')
-    return "Unknown command, run !dev help for more information" 
+    return MessageCode.UNKNOWN_ARGS

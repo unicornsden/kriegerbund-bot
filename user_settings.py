@@ -28,6 +28,11 @@ def set_language(message, lang):
     user.data.lang = lang
     user.store_user_settings()
 
+def get_language(message):
+    user = DiscordUser(id=message.author.id)
+    user.read_user_settings()
+    return user.data.lang
+
 
 def user_usage(message):
     return '''\

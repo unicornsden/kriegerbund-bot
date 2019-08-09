@@ -105,4 +105,5 @@ venv.bak/
 data/
 datapath
 token
+bot-token
 .idea/

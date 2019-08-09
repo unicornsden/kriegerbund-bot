@@ -58,4 +58,3 @@ class StorageContainer:
     DE_STRINGS = dict()
 
 init()
-print(DATA.EN_STRINGS['unknown-args'].format(command=DATA.CMD_CHAR + 'test'))

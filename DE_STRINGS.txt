@@ -1,1 +1,2 @@
 [unknown-args]: Falscher Gebrauch von `{command}`, versuche `{command} help`
+[ping]: Pong, aber auf Deutsch!
