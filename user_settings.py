@@ -1,5 +1,5 @@
 import utils
-import settings
+import storage
 import os
 import discord
 import pickle
@@ -58,7 +58,7 @@ class DiscordUser:
     def get_path(self, file=False):
         if file:
             return self.get_path() + 'data.txt'
-        return settings.DATA + USERPREFIX + str(self.id) + '/'
+        return storage.DATAPATH + USERPREFIX + str(self.id) + '/'
 
     def settings_exist(self, create_if_not_exists=False):
         settings_path = self.get_path(True)

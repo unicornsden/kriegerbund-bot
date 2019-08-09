@@ -1,17 +1,24 @@
-import settings
 import os
 from utils import *
 
 
 def init():
     global DATA
+    global DATAPATH
+    global CMDCHAR
+    CMDCHAR = '$'
     DATA = StorageContainer()
     DATA.EN_STRINGS = read_key_value_pairs('EN_STRINGS.txt')
     DATA.DE_STRINGS = read_key_value_pairs('DE_STRINGS.txt')
 
+    if os.path.isfile("datapath"):
+        DATAPATH = open("datapath", 'r').read().strip()
+    else:
+        DATAPATH = '/data'
+
 
 def get_path(message, name):
-    path = settings.DATA + '/' + get_server_id(message) + '_' + name + '.txt'
+    path = DATAPATH + '/' + get_server_id(message) + '_' + name + '.txt'
     return path
 
 
