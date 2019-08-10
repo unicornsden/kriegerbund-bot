@@ -1,6 +1,6 @@
 import random
 import os
-from storage import *
+import data
 from utils import *
 
 #

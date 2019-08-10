@@ -1,5 +1,4 @@
 import discord
-from user_settings import *
 
 def check_permissions(message):
     if message.author.permissions_in(message.channel).kick_members:
@@ -12,12 +11,7 @@ def get_server_id(message):
 
 
 def ping(message):
-    user = DiscordUser(id=message.author.id)
-    user.read_user_settings()
-    if user.data.lang == 'de':
-        return "Pong, aber auf Deutsch!"
-    else:
-        return "Pong!"
+    return "Pong!"
 
 
 def represents_int(s):

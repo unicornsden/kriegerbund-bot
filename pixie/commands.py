@@ -1,30 +1,8 @@
-import discord
-import storage
 import asyncio
 import time
-from string_set import *
-from dev import *
-import dice
-import user_settings
-from message_builder import *
-
-
-def get_command(message, signs):
-    args = message.content.split(' ')
-    print(args)
-    if isinstance(signs, list):
-        for sign in signs:
-            if message.content.startswith(sign):
-                return (args[0])[len(sign):]
-    elif isinstance(signs, str):
-        if message.content.startswith(signs):
-            return (args[0])[len(signs):]
-    return None
-
-
-def get_args(message):
-    return message.content.split(' ')[1:]
-
+from . import data
+from . import messages
+from .messages import MessageCode
 
 def handle_commands(message):
     """handle_commands
@@ -43,19 +21,19 @@ def handle_commands(message):
     elif command == 'dev':
         code = cmd_dev(message, args)
     elif command == 'help':
-        code = send_message(message, 'help', dm=True)
+        code = messages.send_message(message, 'help', dm=True)
     elif command == 'user':
         code = cmd_user(message, args)
     elif command == 'hallo':
         if check_permissions(message):
-            code = send_message(message, 'hallo-mod')
+            code = messages.send_message(message, 'hallo-mod')
         else:
-            code = send_message(message, 'hallo')
+            code = messages.send_message(message, 'hallo')
     else:
-        code = send_message(message, message.command)
+        code = messages.send_message(message, message.command)
 
     if code == MessageCode.UNKNOWN_ARGS:
-        code = send_message(message, 'unknown-args')
+        code = messages.send_message(message, 'unknown-args')
 
     return code;
 

@@ -1,6 +1,5 @@
 from git import *
-from message_builder import *
-
+import messages
 
 def dev_help():
     return '''\

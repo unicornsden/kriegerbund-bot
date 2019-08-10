@@ -1,18 +1,24 @@
 import os
-from utils import *
-
+from .utils import get_server_id
 
 def init():
-    global DATA
+    global STRINGS
     global DATAPATH
     global CMDCHAR
     CMDCHAR = '$'
-    DATA = StorageContainer()
-    DATA.EN_STRINGS = read_key_value_pairs('EN_STRINGS.txt')
-    DATA.DE_STRINGS = read_key_value_pairs('DE_STRINGS.txt')
+
+    STRINGS = dict()
+
+    print(os.listdir('./'))
+
+    # Read inbuilt
+    for f in os.listdir('./'):
+        if f.endswith('_STRINGS.txt'):
+            STRINGS[f.split('_STRINGS.txt')[0].lower()] = read_key_value_pairs(f)
 
     if os.path.isfile("datapath"):
-        DATAPATH = open("datapath", 'r').read().strip()
+        with open('datapath', 'r') as f:
+            DATAPATH = f.read().strip()
     else:
         DATAPATH = '/data'
 
@@ -25,11 +31,6 @@ def get_path(message, name):
 def get_list(message, name, seperator):
     f = open(get_path(message, name), 'r')
     return f.read().split(seperator)
-
-
-def read_strings():
-    EN_STRINGS = dict()
-    DE_STRINGS = dict()
 
 
 def read_key_value_pairs(file):
@@ -51,10 +52,5 @@ def read_key_value_pairs(file):
             d[key] = value
     return d
 
-
-class StorageContainer:
-    CMD_CHAR = '!'
-    EN_STRINGS = dict()
-    DE_STRINGS = dict()
 
 init()

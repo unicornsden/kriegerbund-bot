@@ -1,8 +1,8 @@
-import utils
-import storage
 import os
 import discord
 import pickle
+from . import utils
+from . import data
 
 USERPREFIX = '/user_'
 COMMAND = '!user'
@@ -37,9 +37,9 @@ def get_language(message):
 def user_usage(message):
     return '''\
 ```Usage:
-    
+
     !user setlang language
-    
+
     Valid languages: de, Deutsch, German, en, English, Englisch
     ```'''
 
@@ -63,7 +63,7 @@ class DiscordUser:
     def get_path(self, file=False):
         if file:
             return self.get_path() + 'data.txt'
-        return storage.DATAPATH + USERPREFIX + str(self.id) + '/'
+        return data.DATAPATH + USERPREFIX + str(self.id) + '/'
 
     def settings_exist(self, create_if_not_exists=False):
         settings_path = self.get_path(True)

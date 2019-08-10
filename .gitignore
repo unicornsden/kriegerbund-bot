@@ -107,3 +107,4 @@ datapath
 token
 bot-token
 .idea/
+*.swp
