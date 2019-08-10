@@ -1,5 +1,6 @@
-[unknown-args]: Not a valid use of `{0.prefix}{0.command}`, try `{0.prefix}{0.command} help`
-[help]:```Kriegerbund Bot Help```
+English, Englisch, en
+[unknown-args]:Not a valid use of `{0.prefix}{0.command}`, try `{0.prefix}{0.command} help`
+[help]:```Pixie-Bot Help```
 ```Commands:
 
 ![command] help: Returns help for the specific command
@@ -12,10 +13,10 @@
 
 !dev: Development tools for reporting bugs and requesting
 features```
-[exception]: Oops, something went wrong.
+[exception]:Oops, something went wrong.
 This is so sad Alexa play Despacito.
-[ping]: Pong!
-[github]: <github-link>
+[ping]:Pong!
+[github]:<github-link>
 [hallo-mod]:<:kriegerbund:352935520579616768> **Hallo Kriegerbund!** <:kriegerbund:352935520579616768>
 
 Ich bin der neue, hauseigene Kriegerbund-Bot.
@@ -44,3 +45,37 @@ Für die Horde! <:horde:334814213828771850>
   {0.prefix}dev bugreport "really long name" [description...]
   ```
 [dev-issue-created]: Issue created!
+[user-help]:```Usage:
+
+    {0.prefix}user setlang language
+
+    Valid languages: de, Deutsch, German, en, English, Englisch
+    ```
+[dice-help]:```Usage:
+
+  {0.prefix}dice or {0.prefix}roll
+
+  {0.prefix}dice XdY or {0.prefix}roll XwY
+  e.g.: {0.prefix}dice 5d6```'''
+[dice-roll-1]:`rolling 
+[dice-roll-2]:...`
+```Result: 
+[dice-roll-3]:```
+[unknown-lang]:Unknown language selected. Try `{0.prefix}languages list`
+[lang-changed]:User language set to: 
+[quotes-added]:Added quote:
+
+[quotes-none]:No quotes were added yet :(
+[quotes-out-of-range]:This quote does not exist yet :(
+[quotes-help]:```Usage:
+
+  {0.prefix}zitat or {0.prefix}quote
+
+  {0.prefix}zitat: Random quote.
+  
+  {0.prefix}zitat #num: Quote #num.
+  
+  {0.prefix}zitat add zitat: Adds a new quote on this server. Requires mod privileges.
+
+  {0.prefix}zitat all: Lists all quotes.```
+[no-permissions]:You don't have the required permissions for that action!

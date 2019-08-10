@@ -62,11 +62,7 @@ async def on_message(message):
         msg = '''\
 Something went wrong.
 This is so sad. Alexa, play Despacito!'''
-
-    if not msg or isinstance(msg, int):
-        return
-
-    await message.channel.send(msg)
+        await message.channel.send(msg)
 
 
 @client.event

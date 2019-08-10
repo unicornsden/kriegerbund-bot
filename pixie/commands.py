@@ -5,6 +5,8 @@ from . import messages
 from .messages import MessageCode
 from .dev import cmd_dev
 from .users import cmd_user
+from .dice import cmd_dice
+from .quotes import cmd_quotes
 
 def handle_commands(message):
     """handle_commands
@@ -19,7 +21,7 @@ def handle_commands(message):
     if command == 'zitat' or command == 'quote':
         code = cmd_quotes(message, args)
     elif command == 'roll' or command == 'dice':
-        code = dice.cmd_roll(message, args)
+        code = cmd_dice(message, args)
     elif command == 'dev':
         code = cmd_dev(message, args)
     elif command == 'help':

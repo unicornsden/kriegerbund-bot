@@ -1,0 +1,15 @@
+UwU, OwO
+[help]:```pixie-bot hewp```
+```commands:
+
+![command] help: retuwwns hewp fow the specific command
+
+!ping: pong! OwO
+
+!quote and !zitat: quwote fuwnction, defauwwt: wandom quwote
+
+!dice and !roll: rowws dice.
+ 
+!dev: devewopment toows fow wepowting buwgs and wequwesting
+featuwwes```
+[unknown-args]:not a vawid uwse of `{0.prefix}{0.command}`, twy `{0.prefix}{0.command} help` UwU

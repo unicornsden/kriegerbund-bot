@@ -8,6 +8,7 @@ class MessageCode:
     ERROR = 1
     NO_STRING = 2
     UNKNOWN_ARGS = 3
+    UNKNOWN_STRING = '[[MessageCode=UNKNOWN_STRING]]'
 
 
 class MessageWrapper:
@@ -123,7 +124,7 @@ def send_message(message, string, dm=False, user=None, format_content=True):
     content
     """
     msg = get_string(string, users.get_language(message))
-    if not msg:
+    if not msg or msg == MessageCode.UNKNOWN_STRING:
         return MessageCode.NO_STRING
 
     return send_custom_message(message, msg, dm=dm, user=user,
@@ -145,7 +146,7 @@ def get_string(name, lang='en'):
             return data.STRINGS[lang][name]
     if name in data.STRINGS['en']:
         return data.STRINGS['en'][name]
-    return None
+    return MessageCode.UNKNOWN_STRING
 
 
 def command_unknown_usage(message, command=None, lang='en'):

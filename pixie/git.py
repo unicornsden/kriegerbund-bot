@@ -16,7 +16,7 @@ def label_exists(repo, label):
 
 
 def make_github_issue(title, body, labels=None):
-    token = open("token", "r").read().strip()
+    token = open(data.DATAPATH + 'tokens/' + 'github-token', 'r').read().strip()
     g = Github(token)
     for repo in g.get_user().get_repos():
         print(repo.name)

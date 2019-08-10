@@ -1,18 +1,17 @@
 import os
 import discord
 import pickle
+from . import messages
 from . import utils
 from . import data
 
 USERPREFIX = '/user_'
-COMMAND = '!user'
-
 
 def cmd_user(message, args):
     if len(args) == 0:
-        return 'Not a valid use of %s, try %s help' % (COMMAND, COMMAND)
+        return messages.MessageCode.UNKNOWN_ARGS
     if args[0] == 'help':
-        return user_usage(message)
+        return messages.send_message(message, 'user-help')
     if len(args) >= 2 and args[0] == 'setlang':
         if args[1].lower() in ['de', 'deutsch', 'german']:
             set_language(message, 'de')
@@ -20,28 +19,26 @@ def cmd_user(message, args):
         elif args[1].lower() in ['en', 'english', 'englisch']:
             set_language(message, 'en')
             return
-    return 'Not a valid use of %s, try %s help' % (COMMAND, COMMAND)
+        else:
+            set_language(message, args[1].lower())
+            return
+    return messages.MessageCode.UNKNOWN_ARGS
 
 
 def set_language(message, lang):
+    if not data.exists_lang(lang):
+        messages.send_message(message, 'unknown-lang')
+        return
     user = DiscordUser(id=message.author.id)
     user.data.lang = lang
     user.store_user_settings()
+    messages.send_custom_message(message, messages.get_string('lang-changed') +
+        lang)
 
 def get_language(message):
     user = DiscordUser(id=message.author.id)
     user.read_user_settings()
     return user.data.lang
-
-
-def user_usage(message):
-    return '''\
-```Usage:
-
-    !user setlang language
-
-    Valid languages: de, Deutsch, German, en, English, Englisch
-    ```'''
 
 
 class UserData:
@@ -89,8 +86,4 @@ class DiscordUser:
             os.makedirs(path)
         with open(self.get_path(True), 'wb') as output:
             pickle.dump(self.data, output, pickle.HIGHEST_PROTOCOL)
-
-
-
-
 

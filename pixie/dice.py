@@ -1,59 +1,56 @@
 import random
-from utils import *
+from . import messages
+from .utils import represents_int
 
 
-def cmd_roll(message, args):
+def cmd_dice(message, args):
     if len(args) < 1:
         return roll_dice(1, 6)
     if args[0] == 'help':
-        return '''\
-```Usage:
-
-  !dice or !roll
-
-  !dice XdY or !roll XwY
-  e.g.: !roll 5d6```'''
+        return messages.send_message(message, 'dice-help')
     return roll_dice_str(message, args)
 
 
-def roll_dice(count, type):
+def roll_dice(message, dice_count, dice_type, split='d'):
     msg = ''
-    sum = 0
+    roll_sum = 0
 
-    for _ in range(count):
-        dice_roll = random.randrange(type) + 1
-        sum += dice_roll
+    for _ in range(dice_count):
+        dice_roll = random.randrange(dice_type) + 1
+        roll_sum += dice_roll
         msg += str(dice_roll) + '+'
 
     msg = msg[:-1]
-    if count > 1:
-        msg += '=' + str(sum)
+    if dice_count > 1:
+        msg += '=' + str(roll_sum)
 
-    msg = '`rolling ' + str(count) + 'd' + str(type) + ' ...`\n```Result: ' + msg + '```'
-    print(msg)
-    return msg
+    msg = (messages.get_string('dice-roll-1')
+    + str(dice_count) + split
+    + str(dice_type) + messages.get_string('dice-roll-2') + msg
+    + messages.get_string('dice-roll-3'))
+
+    return messages.send_custom_message(message, msg)
 
 
 def roll_dice_str(message, args):
     if len(args) != 1:
-        return 'Not a valid !roll/dice command. Try !dice help'
-
+        return messages.MessageCode.UNKNOWN_ARGS
     if 'd' in args[0]:
         split = 'd'
     elif 'w' in args[0]:
         split = 'w'
     else:
-        return 'Not a valid !roll/dice command. Try !dice help'
+        return messages.MessageCode.UNKNOWN_ARGS
 
     dice = args[0].split(split)
 
     if len(dice) != 2:
-        return 'Not a valid !roll/dice command. Try !dice help'
+        return messages.MessageCode.UNKNOWN_ARGS
 
     if (not represents_int(dice[0])) or (not represents_int(dice[1])):
-        return 'Not a valid !roll/dice command. Try !dice help'
+        return messages.MessageCode.UNKNOWN_ARGS
 
-    count = int(dice[0])
-    type = int(dice[1])
+    dice_count = int(dice[0])
+    dice_type = int(dice[1])
 
-    return roll_dice(count, type)
+    return roll_dice(message, dice_count, dice_type, split)
