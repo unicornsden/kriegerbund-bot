@@ -31,3 +31,16 @@ und
 
 Für die Horde! <:horde:334814213828771850>
 [hallo]:Hi, {0.author.mention}!
+[dev-help]:```Usage:
+
+  {0.prefix}dev help: This command
+
+  {0.prefix}dev request name [description...]
+  or
+  {0.prefix}dev request "really long name" [description...]
+
+  {0.prefix}dev bugreport name [description...]
+  or
+  {0.prefix}dev bugreport "really long name" [description...]
+  ```
+[dev-issue-created]: Issue created!

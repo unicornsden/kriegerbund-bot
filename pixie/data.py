@@ -1,26 +1,34 @@
 import os
 from .utils import get_server_id
 
+DATAPATH = './data/'
+
 def init():
     global STRINGS
-    global DATAPATH
+    global STORAGEPATH
     global CMDCHAR
+    global REPO_OWNER
+    global REPO_NAME
+
     CMDCHAR = '$'
+    REPO_OWNER = 'unicornsden'
+    REPO_NAME = 'pixie'
+
+    string_path = DATAPATH + 'strings/'
 
     STRINGS = dict()
 
-    print(os.listdir('./'))
-
     # Read inbuilt
-    for f in os.listdir('./'):
+    for f in os.listdir(string_path):
         if f.endswith('_STRINGS.txt'):
-            STRINGS[f.split('_STRINGS.txt')[0].lower()] = read_key_value_pairs(f)
+            STRINGS[f.split('_STRINGS.txt')[0].lower()] =\
+                read_key_value_pairs(string_path + f)
 
-    if os.path.isfile("datapath"):
-        with open('datapath', 'r') as f:
-            DATAPATH = f.read().strip()
+    if os.path.isfile(DATAPATH + "datapath"):
+        with open(DATAPATH + 'datapath', 'r') as f:
+            STORAGEPATH = f.read().strip()
     else:
-        DATAPATH = '/data'
+        STORAGEPATH = '/storage'
 
 
 def get_path(message, name):

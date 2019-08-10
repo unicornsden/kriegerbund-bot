@@ -1,11 +1,10 @@
 from github import Github
 from github import GithubObject
+from . import data
 
 # Authentication for user filing issue (must have read/write access to
 # repository to add issue to)
 
-REPO_OWNER = 'enkejill'
-REPO_NAME = 'kriegerbund-bot'
 
 
 def label_exists(repo, label):
@@ -21,7 +20,7 @@ def make_github_issue(title, body, labels=None):
     g = Github(token)
     for repo in g.get_user().get_repos():
         print(repo.name)
-    repo = g.get_repo('%s/%s' % (REPO_OWNER, REPO_NAME))
+    repo = g.get_repo('%s/%s' % (data.REPO_OWNER, data.REPO_NAME))
 
     label_list = list()
 

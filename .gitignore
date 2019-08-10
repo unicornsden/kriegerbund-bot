@@ -102,9 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-data/
+storage/
 datapath
-token
+github-token
 bot-token
 .idea/
 *.swp
+*.swo

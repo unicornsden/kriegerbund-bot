@@ -3,6 +3,8 @@ import time
 from . import data
 from . import messages
 from .messages import MessageCode
+from .dev import cmd_dev
+from .users import cmd_user
 
 def handle_commands(message):
     """handle_commands

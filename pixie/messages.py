@@ -41,6 +41,7 @@ class MessageWrapper:
     # jump_url
     # system_content
 
+    prefix = None
     message = None
     command = str()
     args = list()
@@ -62,10 +63,14 @@ def get_command(message, signs):
     if isinstance(signs, list):
         for sign in signs:
             if message.content.startswith(sign):
-                return (args[0])[len(sign):]
+                message.prefix = sign
+                message.command = (args[0])[len(sign):]
+                return message.command
     elif isinstance(signs, str):
         if message.content.startswith(signs):
-            return (args[0])[len(signs):]
+            message.prefix = signs;
+            message.command = (args[0])[len(signs):]
+            return message.command
     return None
 
 
@@ -145,5 +150,5 @@ def get_string(name, lang='en'):
 
 def command_unknown_usage(message, command=None, lang='en'):
     command = message.command
-    name = data.CMDCHAR + command
+    name = message.prefix + command
     return get_string('unknown-args', lang).format(command=name)

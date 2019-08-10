@@ -19,8 +19,8 @@ def run_bot(token=None):
         data.TOKEN = token.strip()
     if len(sys.argv) >= 2:
         data.TOKEN = sys.argv[1].strip()
-    elif os.path.isfile('./bot-token'):
-        with open('./bot-token', 'r') as f:
+    elif os.path.isfile(data.DATAPATH + 'tokens/bot-token'):
+        with open(data.DATAPATH + 'tokens/bot-token', 'r') as f:
             data.TOKEN = f.read().strip()
     else:
         sys.exit("No TOKEN supplied")
@@ -35,6 +35,8 @@ async def on_message(message):
     :param message: The discord.Message
     :return: None
     """
+    # Wrap message to allow additional attributes to be passed along
+    message = MessageWrapper(message)
 
     # Don't react to bot itself
     if message.author == client.user:
@@ -45,10 +47,6 @@ async def on_message(message):
     # Don't do anything if there was no valid command.
     if command is None:
         return
-
-    # Wrap message to allow additional attributes to be passed along
-    message = MessageWrapper(message)
-    message.command = command
 
     # Get args (all strings after the command separated by ' ')
     args = messages.get_args(message)
