@@ -19,7 +19,7 @@ def dev_issue(message, split, label):
         description = splits[1]
 
     description = '[Issue created by {user}]\n'.format(user=message.author.name) + description
-    make_github_issue(name, description, label)
+    make_github_issue(name, description, [label, 'status: pending'])
     messages.send_message(message, 'dev-issue-created')
 
 
