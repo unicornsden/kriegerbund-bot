@@ -3,15 +3,15 @@ English, Englisch, en
 [help]:```Pixie-Bot Help```
 ```Commands:
 
-![command] help: Returns help for the specific command
+{0.prefix}[command] help: Returns help for the specific command
 
-!ping: Pong!
+{0.prefix}ping: Pong!
 
-!quote and !zitat: Quote function, default: random quote
+{0.prefix}quote and {0.prefix}zitat: Quote function, default: random quote
 
-!dice and !roll: Rolls dice.
+{0.prefix}dice and {0.prefix}roll: Rolls dice.
 
-!dev: Development tools for reporting bugs and requesting
+{0.prefix}dev: Development tools for reporting bugs and requesting
 features```
 [exception]:Oops, something went wrong.
 This is so sad Alexa play Despacito.

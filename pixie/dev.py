@@ -11,12 +11,13 @@ def dev_issue(message, split, label):
     content = message.content.split(split, 1)[1].strip()
     if content[0] == '\"':
         splits = content[1:].split('\"', 1)
-        name = splits[0]
-        description = splits[1]
     else:
         splits = content.split(' ', 1)
-        name = splits[0]
+
+    name = splits[0]
+    if len(splits) > 1:
         description = splits[1]
+
 
     description = '[Issue created by {user}]\n'.format(user=message.author.name) + description
     make_github_issue(name, description, [label, 'status: pending'])
