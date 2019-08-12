@@ -1,6 +1,14 @@
+"""
+Pixie Message Handling
+======================
+| ``pixie.messages``
+| Handles message wrapping & data extraction from :class:`discord.message` objects
+"""
+
 from . import data
 from . import users
 import asyncio
+
 
 class MessageCode:
     """MessageCode"""
@@ -12,6 +20,9 @@ class MessageCode:
 
 
 class MessageWrapper:
+    """
+    A wrapper for the discord.Message class. Contains additional info.
+    """
     # Shadow fields:
     # tts
     # type
@@ -48,6 +59,10 @@ class MessageWrapper:
     args = list()
 
     def __init__(self, message):
+        """
+        Constructor
+        :param message: discord.Message to wrap
+        """
         self.message = message
 
     def __getattr__(self, name):
@@ -59,23 +74,34 @@ class MessageWrapper:
         return getattr(self.message, name)
 
 
-def get_command(message, signs):
+def get_command(message, prefixes):
+    """
+    Gets a command (first word after the prefix) and stores it in the message
+    :param message: MessageWrapper to extract from
+    :param prefixes: list of valid prefixes or string of valid prefix
+    :return: command name
+    """
     args = message.content.split(' ')
-    if isinstance(signs, list):
-        for sign in signs:
+    if isinstance(prefixes, list):
+        for sign in prefixes:
             if message.content.startswith(sign):
                 message.prefix = sign
                 message.command = (args[0])[len(sign):]
                 return message.command
-    elif isinstance(signs, str):
-        if message.content.startswith(signs):
-            message.prefix = signs;
-            message.command = (args[0])[len(signs):]
+    elif isinstance(prefixes, str):
+        if message.content.startswith(prefixes):
+            message.prefix = prefixes;
+            message.command = (args[0])[len(prefixes):]
             return message.command
     return None
 
 
 def get_args(message):
+    """
+    Gets the arguments from a message's contents. Arguments are all strings separated by ' ' after the first.
+    :param message: MessageWrapper to read from
+    :return: list() of args
+    """
     return message.content.split(' ')[1:]
 
 
@@ -83,11 +109,11 @@ def send_custom_message(message, msg, dm=False, user=None, format_content=True):
     """send_custom_message
     Sends a message with custom text.
     :param message: MessageWrapper object with data for formatting.
-    :param string: Name of the string to read.
+    :param msg: str() contents to send.
     :param dm: [Optional] Whether the message should be send as a dm.
     :param user: [Optional] Sends the message to a custom user. Requires
     dm=True
-    :param format: [Optional] Whether .format(message) should be called on the
+    :param format_content: [Optional] Whether .format(message) should be called on the
     content
     """
 
@@ -119,16 +145,14 @@ def send_message(message, string, dm=False, user=None, format_content=True):
     Sends a message with string supplied by [lang]_STRING.txt files.
     :param message: MessageWrapper object with data for formatting.
     :param string: Name of the string to read.
-    :param channel: [Optional] Specify the channel to send to.
-    :param format: [Optional] Whether .format(message) should be called on the
-    content
+    :param dm: Whether the message should be sent to dm. Requires user to not be None
+    :param user: User for dm usage.
     """
     msg = get_string(string, users.get_language(message))
     if not msg or msg == MessageCode.UNKNOWN_STRING:
         return MessageCode.NO_STRING
 
-    return send_custom_message(message, msg, dm=dm, user=user,
-            format_content=format_content)
+    return send_custom_message(message, msg, dm=dm, user=user, format_content=format_content)
 
 
 async def launch_message(channel, msg):
@@ -141,6 +165,12 @@ async def launch_message(channel, msg):
 
 
 def get_string(name, lang='en'):
+    """
+    Gets a string from data.STRINGS
+    :param name: string name (key)
+    :param lang: language to read string from
+    :return: string content (value)
+    """
     if lang in data.STRINGS:
         if name in data.STRINGS[lang]:
             return data.STRINGS[lang][name]
@@ -148,8 +178,3 @@ def get_string(name, lang='en'):
         return data.STRINGS['en'][name]
     return MessageCode.UNKNOWN_STRING
 
-
-def command_unknown_usage(message, command=None, lang='en'):
-    command = message.command
-    name = message.prefix + command
-    return get_string('unknown-args', lang).format(command=name)

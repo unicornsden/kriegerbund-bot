@@ -1,8 +1,9 @@
-#/usr/bin/env python
+# /usr/bin/env python
 # -*- coding: utf-8 -*-
 import unittest
 from unittest.mock import patch
 import pixie.messages as messages
+
 
 class MessageExtractionTestCase(unittest.TestCase):
 
@@ -32,10 +33,10 @@ class MessageExtractionTestCase(unittest.TestCase):
 
 
 class ArgsExtractionTestCase(unittest.TestCase):
-    
+
     @patch('pixie.messages.MessageWrapper')
     def setUp(self, mock_message):
-        self.message = mock_message 
+        self.message = mock_message
 
     def tearDown(self):
         # Revert setup stuff
@@ -44,7 +45,7 @@ class ArgsExtractionTestCase(unittest.TestCase):
     def test_args_extraction(self):
         self.message.content = '!command arg1 arg2 arg3'
         self.assertEqual(messages.get_args(self.message), ['arg1', 'arg2',
-        'arg3'])
+                                                           'arg3'])
 
 
 class BuildStringTestCase(unittest.TestCase):
@@ -56,7 +57,7 @@ class BuildStringTestCase(unittest.TestCase):
 
     def test_different_langs(self):
         with patch.dict('pixie.data.STRINGS', {'en': {'test1': 'Test 1',
-            'test2': 'Test 2'}, 'de': {'test1': '1. Test'}}):
+                                                      'test2': 'Test 2'}, 'de': {'test1': '1. Test'}}):
             self.assertEqual(messages.get_string('test1', 'de'), '1. Test')
             self.assertEqual(messages.get_string('test2', 'en'), 'Test 2')
             self.assertEqual(messages.get_string('test2', 'de'), 'Test 2')
@@ -66,12 +67,10 @@ class BuildStringTestCase(unittest.TestCase):
     @patch('pixie.messages.MessageWrapper')
     def test_unknown_usage(self, message):
         with patch.dict('pixie.data.STRINGS', {'en':
-        {'unknown-args': 'Test {command}'}}):
+                                                   {'unknown-args': 'Test {command}'}}):
             message.command = 'test'
             self.assertEqual(messages.get_string('unknown-args'),
-            'Test {command}')
-            self.assertEqual(messages.command_unknown_usage(message),
-            'Test !test')
+                             'Test {command}')
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(MessageExtractionTestCase)

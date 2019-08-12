@@ -1,6 +1,13 @@
+"""
+Pixie Commands
+==============
+| ``pixie.commands``
+| Handles command switching.
+| TODO: MAYBE COMBINE WITH `pixie.messages`
+"""
 import asyncio
 import time
-from . import data
+from . import utils
 from . import messages
 from .messages import MessageCode
 from .dev import cmd_dev
@@ -8,11 +15,14 @@ from .users import cmd_user
 from .dice import cmd_dice
 from .quotes import cmd_quotes
 
+
 def handle_commands(message):
-    """handle_commands
-    Handles the command switch & calls relevant function.
+    """Handles the command switch & calls relevant function.
     Add your custom command here. But ensure that it isn't in "EN_STRINGS.txt"
-    :param message: MessageWrapper object - command and args must be set.
+
+    :param message: The message to handle.
+    :type message: :class:`messages.MessageWrapper`
+    :return type: :class:`pixie.messages.MessageCode`
     """
     command = message.command
     print(command)
@@ -29,7 +39,7 @@ def handle_commands(message):
     elif command == 'user':
         code = cmd_user(message, args)
     elif command == 'hallo':
-        if check_permissions(message):
+        if utils.check_permissions(message):
             code = messages.send_message(message, 'hallo-mod')
         else:
             code = messages.send_message(message, 'hallo')
@@ -39,10 +49,13 @@ def handle_commands(message):
     if code == MessageCode.UNKNOWN_ARGS:
         code = messages.send_message(message, 'unknown-args')
 
-    return code;
+    return code
 
 
 async def cmd_load(message, count, max_count=20):
+    """
+    TODO: FIX AND STUFF - REALLY JUST A TECH DEMO x)
+    """
     msg = '`Loading .'
     if count == 0:
         new_msg = (await message.channel.send(msg + '`'))
@@ -58,7 +71,3 @@ async def cmd_load(message, count, max_count=20):
     msg += '`'
     await message.edit(content=msg)
     asyncio.ensure_future(cmd_load(message, count+1))
-
-
-def cmd_test(message, args):
-    return ''

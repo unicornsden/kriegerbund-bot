@@ -1,4 +1,9 @@
-# discord bot - main application
+"""
+Pixie Core
+==========
+| ``pixie.core module``
+| Contains calls to run and setup the bot
+"""
 import discord
 import subprocess
 import os
@@ -11,8 +16,13 @@ from .messages import MessageWrapper
 
 client = discord.Client()
 
-def run_bot(token=None):
 
+def run_bot(token=None):
+    """Runs the bot
+
+    :param token: Token supplied from non-default source, other wise data.DATAPATH/tokens/bot-token will be used
+    :type token: str, optional
+    """
     data.init()
 
     if token is not None:
@@ -30,10 +40,10 @@ def run_bot(token=None):
 
 @client.event
 async def on_message(message):
-    """
-    Called whenever a message is read by the bot.
-    :param message: The discord.Message
-    :return: None
+    """Called whenever a message is read by the bot.
+
+    :param message: The message recieved
+    :type message: :class:`discord.Message`
     """
     # Wrap message to allow additional attributes to be passed along
     message = MessageWrapper(message)
@@ -67,6 +77,8 @@ This is so sad. Alexa, play Despacito!'''
 
 @client.event
 async def on_ready():
+    """Called when the bot is ready and running.
+    """
     if os.path.exists(data.DATAPATH):
         print('data already exists')
     else:

@@ -4,6 +4,14 @@ from .utils import represents_int
 
 
 def cmd_dice(message, args):
+    """
+    cmd switch for dice
+    :param message: the message to read from
+    :type message: messages.MessageWrapper
+    :param args: command arguments
+    :type args: list(str)
+    :return:
+    """
     if len(args) < 1:
         return roll_dice(1, 6)
     if args[0] == 'help':
