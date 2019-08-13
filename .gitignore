@@ -109,3 +109,5 @@ bot-token
 .idea/
 *.swp
 *.swo
+debug_log
+test_helper.py
