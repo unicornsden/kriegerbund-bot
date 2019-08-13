@@ -5,6 +5,7 @@ Pixie Data Handling
 | Data storage module. Contains helper functions to read data and global variables used throughout the bot.
 """
 import os
+import builtins
 from .utils import get_server_id
 
 DATAPATH = './data/'
@@ -141,4 +142,85 @@ def read_key_value_pairs(filepath):
             value = p.split(']:')[1]
             d[key] = value
     return d, pre_string
+
+
+class DataStorage:
+
+    foo = ''
+
+    def __init__(self, test=False):
+        if test:
+            self.foo = ['a000128128', 'b', 'c']
+        else:
+            self.foo = ['ab', 'cd', 'ef']
+
+    def write_var(self, var):
+        name = var[0]
+        value = var[1]
+        return '<<' + str(type(value)).split('\'')[1] + '>>' + name + ':' + str(value) + '\n'
+
+    def build_data(self):
+        out = ''
+        for var, value in vars(self).items():
+            out += self.write_var((var, value))
+        return out
+
+    def write_data(self, file_path, pre_string=None):
+        with open(file_path, 'w+') as f:
+            out = pre_string if pre_string is not None else ''
+            if len(out) >= 2 and out[-2] != '\n':
+                out += '\n'
+            out += self.build_data()
+            f.write(out)
+
+    def read_data_string(self, input_string):
+        var_rows = input_string.split('<<')
+        if input_string[0:1] != '<<' and len(var_rows) > 0:
+           var_rows = var_rows[1:]
+
+        for row in var_rows:
+            splits = row.split('>>')
+            var_type = splits[0]
+            splits = splits[1].split(':', 1)
+            var_name = splits[0]
+            var_value = splits[1]
+            self.set_var(var_name, var_type, var_value)
+
+    def read_data(self, file_path):
+        with open(file_path, 'r') as f:
+            input_string = f.read()
+            self.read_data_string(input_string)
+
+    def set_var(self, var_name, var_type, var_value):
+        if var_type == 'list' or var_type == 'tuple':
+            self.set_sequence(var_name, var_type, var_value)
+            return
+        elif var_type == 'dict':
+            raise NotImplemented()
+
+        try:
+            setattr(self, var_name, getattr(builtins, var_type)(var_value))
+        except Exception:
+            pass
+
+    def set_sequence(self, var_name, var_type, var_value):
+        """TODO: CAN ONLY HANDLE STRING SEQUENCES
+
+        :param var_name:
+        :param var_type:
+        :param var_value:
+        :return:
+        """
+        var_value = var_value.strip()[1:-1]
+        var_list = list()
+        variables = var_value.split(',')
+        for v in variables:
+            var_list.append(v.strip()[1:-1])
+        if var_type == 'tuple':
+            setattr(self, var_name, tuple(var_list))
+            return
+        setattr(self, var_name, var_list)
+
+
+
 
