@@ -48,6 +48,7 @@ def init():
             STORAGEPATH = f.read().strip()
     else:
         STORAGEPATH = '/storage'
+    print(STORAGEPATH)
 
 
 def get_lang_alts(string, output, lang):

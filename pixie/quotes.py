@@ -24,8 +24,7 @@ def get_quotes(message):
 def random_quote(message):
     quotes = get_quotes(message)
     if len(quotes) == 0:
-        messages.send_message(message, 'quotes-none')
-
+        return messages.send_message(message, 'quotes-none')
     messages.send_custom_message(message, quotes[random.randrange(0,
         len(quotes),1)])
 
@@ -33,11 +32,10 @@ def random_quote(message):
 def add_quote(quote_list, message):
     if not utils.check_permissions(message):
         messages.send_message(message, 'no-permissions')
-
     if not os.path.isfile(data.get_path(message, "quotes")):
         f = open(data.get_path(message, "quotes"),'w+')
     else:
-        f = open(data.get_path(message, "quotes" ),'a+')
+        f = open(data.get_path(message, "quotes"),'a+')
     quote = ""
     for s in quote_list:
         quote += s + ' '
