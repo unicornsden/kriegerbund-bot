@@ -57,8 +57,9 @@ async def on_message(message):
     try:
         msg = commands.handle_commands(message)
     except Exception as e:
-        print('Exception thrown: ' + str(e) + '\n')
-        traceback.print_exc()
+        with open('debug_log', 'a+') as f:
+            f.write(str(e))
+            f.write(traceback.format_exc())
         msg = '''\
 Something went wrong.
 This is so sad. Alexa, play Despacito!'''

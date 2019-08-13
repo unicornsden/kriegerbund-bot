@@ -31,12 +31,12 @@ def init():
             if s.strip() != '':
                 LANG_NAME[lang] = get_lang_alts(s, LANG_ALTS, lang)
 
-
     if os.path.isfile(DATAPATH + "datapath"):
         with open(DATAPATH + 'datapath', 'r') as f:
             STORAGEPATH = f.read().strip()
     else:
         STORAGEPATH = '/storage'
+    print(STORAGEPATH)
 
 
 def get_lang_alts(string, output, lang):
