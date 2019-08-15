@@ -9,7 +9,7 @@ import subprocess
 import os
 import sys
 import traceback
-import pixie.messages as messages
+from pixie import messages
 import pixie.data as data
 import pixie.debug as debug
 import pixie.cache as cache

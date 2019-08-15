@@ -1,10 +1,6 @@
 import discord
-import datetime
 import pixie.data as data
-from pixie.data import DataStorage
-
-import pixie.messages as messages
-
+from pixie import messages
 
 def cmd_user(message, args):
     if len(args) == 0:

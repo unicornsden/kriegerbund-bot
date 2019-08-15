@@ -6,7 +6,7 @@ Pixie Message Handling
 """
 
 import pixie.data as data
-import pixie.users as users
+from pixie import users
 import pixie.servers as servers
 import asyncio
 from .dev import cmd_dev
