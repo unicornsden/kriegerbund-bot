@@ -206,7 +206,7 @@ def handle_commands(message):
     if command == 'zitat' or command == 'quote':
         code = cmd_quotes(message, args)
     elif command == 'test':
-        code = send_custom_message(message, 'test')
+        code = send_custom_message(message, 'testeronico')
     elif command == 'roll' or command == 'dice':
         code = cmd_dice(message, args)
     elif command == 'dev':
