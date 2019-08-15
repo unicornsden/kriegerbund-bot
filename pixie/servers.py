@@ -25,7 +25,7 @@ def set_settings(message, args):
         roles_confirmed = list()
         for r in roles:
             for gr in message.guild.roles:
-                if r.lower() == gr.name:
+                if r.lower() == gr.name.lower():
                     roles_confirmed.append(gr)
         confirmed_ids = list()
         for r in roles_confirmed:
