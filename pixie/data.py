@@ -7,7 +7,7 @@ Pixie Data Handling
 import builtins
 import os
 import datetime
-from .utils import get_server_id
+from pixie.utils import get_server_id
 
 DATAPATH = './data/'
 

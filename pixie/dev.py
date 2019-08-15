@@ -1,7 +1,7 @@
 from github import Github
 from github import GithubObject
-from . import messages
-from . import data
+from pixie import messages
+from pixie import data
 
 
 def dev_issue(message, split, label):

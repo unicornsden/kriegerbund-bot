@@ -5,14 +5,14 @@ Pixie Message Handling
 | Handles message wrapping & data extraction from :class:`discord.message` objects
 """
 
-import pixie.data as data
+from pixie import data
 from pixie import users
-import pixie.servers as servers
+from pixie import servers
 import asyncio
-from .dev import cmd_dev
-from .dice import cmd_dice
-from .quotes import cmd_quotes
-from .servers import cmd_server
+from pixie.dev import cmd_dev
+from pixie.dice import cmd_dice
+from pixie.quotes import cmd_quotes
+from pixie.servers import cmd_server
 
 
 class MessageCode:

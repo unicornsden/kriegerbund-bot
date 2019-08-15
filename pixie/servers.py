@@ -4,9 +4,7 @@ Pixie Server Data
 ``pixie.servers``
 """
 import discord
-import pixie.data as data
-import pixie.messages as messages
-import pixie.utils as utils
+from pixie import data, messages, utils
 
 
 def set_settings(message, args):

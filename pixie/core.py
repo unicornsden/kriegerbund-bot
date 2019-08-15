@@ -10,10 +10,10 @@ import os
 import sys
 import traceback
 from pixie import messages
-import pixie.data as data
-import pixie.debug as debug
-import pixie.cache as cache
-import pixie.servers as servers
+from pixie import data
+from pixie import debug
+from pixie import cache
+from pixie import servers
 from pixie.messages import MessageWrapper
 
 client = discord.Client()

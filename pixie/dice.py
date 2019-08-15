@@ -1,6 +1,6 @@
 import random
-from . import messages
-from .utils import represents_int
+from pixie import messages
+from pixie.utils import represents_int
 
 
 def cmd_dice(message, args):

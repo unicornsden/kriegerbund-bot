@@ -1,6 +1,6 @@
 import random
 import os
-from . import messages, data, utils, users
+from pixie import messages, data, utils
 
 
 #

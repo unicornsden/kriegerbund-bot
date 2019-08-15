@@ -1,6 +1,6 @@
 import discord
-import pixie.data as data
 from pixie import messages
+from pixie import data
 
 def cmd_user(message, args):
     if len(args) == 0:

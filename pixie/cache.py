@@ -1,5 +1,5 @@
-import pixie.users as users
-import pixie.servers as servers
+from pixie import users
+from pixie import servers
 import threading
 import time
 import operator
