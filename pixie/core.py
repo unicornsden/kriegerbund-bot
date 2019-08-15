@@ -45,12 +45,12 @@ def run_bot(token=None):
 
 @client.event
 async def on_member_join(member):
-    if member.guild.id in data.CACHE.cached_servers:
-        channel_id = data.CACHE.cached_servers[member.guild.id].get('join-channel')
-        if channel_id is None:
-            return
-        await member.guild.get_channel(channel_id).send(content='New member')
-    return
+    s = servers.get_server_data(member.guild.id)
+    channel_id = s.get('join-channel')
+    if channel_id is None:
+        return
+    c = member.guild.get_channel(channel_id)
+    await c.send(messages.get_string('join-message', 'de').format(member, c))
 
 
 @client.event
@@ -61,11 +61,12 @@ async def on_member_update(before, after):
     if len(diff) < 1:
         return
     s = servers.get_server_data(before.guild.id)
-    if diff[0].id in s.get('welcome-roles'):
+    if str(diff[0].id) in s.get('welcome-roles'):
         channel_id = servers.get_server_data(before.guild.id).get('welcome-channel')
         if channel_id is None:
             return
-        await before.guild.get_channel(channel_id).send(content=('Willkommen {0.name}'.format(before)))
+        c = before.guild.get_channel(channel_id)
+        await c.send(messages.get_string('welcome-message', 'de').format(before, c))
     return
 
 

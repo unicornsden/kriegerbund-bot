@@ -8,6 +8,7 @@ import builtins
 import os
 import datetime
 from pixie.utils import get_server_id
+from pixie import utils
 
 DATAPATH = './data/'
 
@@ -261,7 +262,10 @@ class DataStorage:
         var_list = list()
         variables = var_value.split(',')
         for v in variables:
-            var_list.append(v.strip()[1:-1])
+            if utils.represents_int(v):
+                var_list.append(v.strip())
+            else:
+                var_list.append(v.strip()[1:-1])
         if var_type == 'tuple':
             self.set(var_name, tuple(var_list))
             return

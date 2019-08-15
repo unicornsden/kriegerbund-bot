@@ -1,2 +1,13 @@
 [unknown-args]: Falscher Gebrauch von `{command}`, versuche `{command} help`
 [ping]: Pong, aber auf Deutsch!
+[welcome-message]: ```+++ Neues Mitglied +++```
+**Herzlich Willkommen** auf dem Kriegerbund-Server, {0.mention}!<:pepe:233617653879537664>
+
+Stell dich doch direkt einmal hier, im {1.mention} vor.
+
+Viel Spaß!
+https://media.giphy.com/media/3o6gDQhjc1TAcHyuAM/giphy.gif
+[join-message]:
+Willkommen auf dem Kriegerbund-Server, {0.mention}! <:kriegerbund:352935520579616768>
+
+Bevor du loslegst, lies dir ersteinmal die Regeln in <#563863577270681625> durch. Wenn du das getan hast, melde dich bei einem <@&223109873271832576>, damit du auf den Rest des Servers zugriff bekommst!
