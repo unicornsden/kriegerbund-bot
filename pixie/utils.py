@@ -1,7 +1,12 @@
 import discord
 
-def check_permissions(message):
-    if message.author.permissions_in(message.channel).kick_members:
+def check_permissions(message, admin=False):
+    if admin and isinstance(message.author, discord.Member):
+        if message.author.guild_permissions.administrator:
+            return True
+        else:
+            return False
+    elif message.author.permissions_in(message.channel).kick_members:
         return True
     return False
 

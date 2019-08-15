@@ -13,3 +13,18 @@ UwU, OwO
 !dev: devewopment toows fow wepowting buwgs and wequwesting
 featuwwes```
 [unknown-args]:not a vawid uwse of `{0.prefix}{0.command}`, twy `{0.prefix}{0.command} help` UwU
+[ping]:Pong (・`ω´・)
+[hallo]:Hewwo, {0.author.mention}! How awe u? OwO
+[dev-issue-created]: Issue cweated ^w^ 
+[dev-help]:```Usage:
+
+  {0.prefix}dev help: This command
+
+  {0.prefix}dev request nyame [descwiption...]
+  ow
+  {0.prefix}dev request "weawwy wong nyame" [descwiption...]
+
+  {0.prefix}dev bugreport nyame [descwiption...]
+  ow
+  {0.prefix}dev bugreport "weawwy wong nyame" [descwiption...]
+```

@@ -1,7 +1,6 @@
 from github import Github
 from github import GithubObject
 from . import messages
-from .messages import MessageCode
 from . import data
 
 
@@ -39,16 +38,16 @@ def cmd_dev(message, args):
     :return: MessageCode result of dev actions
     """
     if len(args) == 0:
-        return MessageCode.UNKNOWN_ARGS
+        return messages.MessageCode.UNKNOWN_ARGS
     if args[0] == 'help':
         return messages.send_message(message, 'dev-help')
     if len(args) < 2:
-        return MessageCode.UNKNOWN_ARGS
+        return messages.MessageCode.UNKNOWN_ARGS
     if args[0] == 'request':
         return dev_issue(message, args[0], 'type: enhancement')
     if args[0] == 'bugreport':
         return dev_issue(message, args[0], 'type: bug')
-    return MessageCode.UNKNOWN_ARGS
+    return messages.MessageCode.UNKNOWN_ARGS
 
 
 def label_exists(repo, label):

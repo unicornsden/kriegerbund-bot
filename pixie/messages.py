@@ -5,9 +5,14 @@ Pixie Message Handling
 | Handles message wrapping & data extraction from :class:`discord.message` objects
 """
 
-from . import data
-from . import users
+import pixie.data as data
+import pixie.users as users
+import pixie.servers as servers
 import asyncio
+from .dev import cmd_dev
+from .dice import cmd_dice
+from .quotes import cmd_quotes
+from .servers import cmd_server
 
 
 class MessageCode:
@@ -64,6 +69,9 @@ class MessageWrapper:
         :param message: discord.Message to wrap
         """
         self.message = message
+        self.server_id = message.guild.id
+        self.user_id = message.author.id
+        self.server_data = None
 
     def __getattr__(self, name):
         """__getattr__
@@ -72,6 +80,10 @@ class MessageWrapper:
         :param name: attribute name
         """
         return getattr(self.message, name)
+
+    def get_server_data(self):
+        self.server_data = servers.get_server_data(self.server_id)
+
 
 
 def get_command(message, prefixes):
@@ -90,7 +102,7 @@ def get_command(message, prefixes):
                 return message.command
     elif isinstance(prefixes, str):
         if message.content.startswith(prefixes):
-            message.prefix = prefixes;
+            message.prefix = prefixes
             message.command = (args[0])[len(prefixes):]
             return message.command
     return None
@@ -178,3 +190,37 @@ def get_string(name, lang='en'):
         return data.STRINGS['en'][name]
     return MessageCode.UNKNOWN_STRING
 
+
+def handle_commands(message):
+    """Handles the command switch & calls relevant function.
+    Add your custom command here. But ensure that it isn't in "EN_STRINGS.txt"
+
+    :param message: The message to handle.
+    :type message: :class:`messages.MessageWrapper`
+    :return type: :class:`pixie.messages.MessageCode`
+    """
+    command = message.command
+    print(command)
+    args = message.args
+
+    if command == 'zitat' or command == 'quote':
+        code = cmd_quotes(message, args)
+    elif command == 'roll' or command == 'dice':
+        code = cmd_dice(message, args)
+    elif command == 'dev':
+        code = cmd_dev(message, args)
+    elif command == 'help':
+        code = send_message(message, 'help', dm=True)
+    elif command == 'user':
+        code = users.cmd_user(message, args)
+    elif command == 'hallo':
+        code = send_message(message, 'hallo')
+    elif command == 'server':
+        code = cmd_server(message, args)
+    else:
+        code = send_message(message, message.command)
+
+    if code == MessageCode.UNKNOWN_ARGS:
+        code = send_message(message, 'unknown-args')
+
+    return code

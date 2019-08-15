@@ -4,8 +4,9 @@ Pixie Data Handling
 | ``pixie.data``
 | Data storage module. Contains helper functions to read data and global variables used throughout the bot.
 """
-import os
 import builtins
+import os
+import datetime
 from .utils import get_server_id
 
 DATAPATH = './data/'
@@ -15,15 +16,16 @@ def init():
     """Initializes the global data vars. Most will be read from files or set to a default.
     / TODO: MORE GRANULARITY & BETTER DESCRIPTIONS
     """
+    global CACHE
     global STRINGS
     global LANG_ALTS
     global LANG_NAME
     global STORAGEPATH
-    global CMDCHAR
+    global CMDCHARS
     global REPO_OWNER
     global REPO_NAME
 
-    CMDCHAR = '$'
+    CMDCHARS = ['$', '~', 'ü!']
     REPO_OWNER = 'unicornsden'
     REPO_NAME = 'pixie'
 
@@ -126,7 +128,7 @@ def read_key_value_pairs(filepath):
     """
     pre_string = ''
     d = dict()
-    with open(filepath, 'r+') as f:
+    with open(filepath, 'r+', encoding='utf-8') as f:
         pairs = f.read().split('\n[')
 
         if len(pairs) != 0:
@@ -145,15 +147,49 @@ def read_key_value_pairs(filepath):
     return d, pre_string
 
 
+class Test:
+
+    def __init__(self):
+        pass
+
+
 class DataStorage:
-
+    PATHPREFIX = ''
     foo = ''
+    fields = dict()
 
-    def __init__(self, test=False):
-        if test:
-            self.foo = ['a000128128', 'b', 'c']
-        else:
-            self.foo = ['ab', 'cd', 'ef']
+    def __init__(self, no_files=False):
+        self.fields = dict()
+        self.last_call = datetime.datetime.now()
+        if not no_files:
+            self.check_folder()
+
+    def __getattr__(self, item):
+        return self.get(item)
+
+    def check_folder(self):
+        path = self.get_path()
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+    def get_path(self, file=False):
+        if file:
+            return self.get_path() + 'settings.dust'
+        return STORAGEPATH + self.PATHPREFIX + str(self.id) + '/'
+
+    def get(self, name):
+        self.last_call = datetime.datetime.now()
+        if name in self.fields:
+            return self.fields[name]
+        return None
+
+    def set(self, name, value):
+        self.last_call = datetime.datetime.now()
+        self.fields[name] = value
+
+    # ================
+    # IO
+    # ================
 
     def write_var(self, var):
         name = var[0]
@@ -162,11 +198,15 @@ class DataStorage:
 
     def build_data(self):
         out = ''
-        for var, value in vars(self).items():
+        for var, value in self.fields.items():
+            if var == 'last_call':
+                continue
             out += self.write_var((var, value))
         return out
 
-    def write_data(self, file_path, pre_string=None):
+    def write_data(self, file_path=None, pre_string=None):
+        if file_path is None:
+            file_path = self.get_path(file=True)
         with open(file_path, 'w+') as f:
             out = pre_string if pre_string is not None else ''
             if len(out) >= 2 and out[-2] != '\n':
@@ -177,7 +217,7 @@ class DataStorage:
     def read_data_string(self, input_string):
         var_rows = input_string.split('<<')
         if input_string[0:1] != '<<' and len(var_rows) > 0:
-           var_rows = var_rows[1:]
+            var_rows = var_rows[1:]
 
         for row in var_rows:
             splits = row.split('>>')
@@ -185,14 +225,19 @@ class DataStorage:
             splits = splits[1].split(':', 1)
             var_name = splits[0]
             var_value = splits[1]
-            self.set_var(var_name, var_type, var_value)
+            self.set_field(var_name, var_type, var_value.strip())
 
-    def read_data(self, file_path):
-        with open(file_path, 'r') as f:
-            input_string = f.read()
-            self.read_data_string(input_string)
+    def read_data(self, file_path=None):
+        if file_path is None:
+            file_path = self.get_path(file=True)
+        try:
+            with open(file_path, 'r') as f:
+                input_string = f.read()
+                self.read_data_string(input_string)
+        except FileNotFoundError:
+            return
 
-    def set_var(self, var_name, var_type, var_value):
+    def set_field(self, var_name, var_type, var_value):
         if var_type == 'list' or var_type == 'tuple':
             self.set_sequence(var_name, var_type, var_value)
             return
@@ -200,7 +245,7 @@ class DataStorage:
             raise NotImplemented()
 
         try:
-            setattr(self, var_name, getattr(builtins, var_type)(var_value))
+            self.set(var_name, getattr(builtins, var_type)(var_value))
         except Exception:
             pass
 
@@ -218,10 +263,6 @@ class DataStorage:
         for v in variables:
             var_list.append(v.strip()[1:-1])
         if var_type == 'tuple':
-            setattr(self, var_name, tuple(var_list))
+            self.set(var_name, tuple(var_list))
             return
-        setattr(self, var_name, var_list)
-
-
-
-
+        self.set(var_name, var_list)

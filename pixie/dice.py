@@ -13,7 +13,7 @@ def cmd_dice(message, args):
     :return:
     """
     if len(args) < 1:
-        return roll_dice(1, 6)
+        return roll_dice(message, 1, 6)
     if args[0] == 'help':
         return messages.send_message(message, 'dice-help')
     return roll_dice_str(message, args)

@@ -16,7 +16,7 @@ features```
 [exception]:Oops, something went wrong.
 This is so sad Alexa play Despacito.
 [ping]:Pong!
-[github]:<github-link>
+[github]:https://github.com/unicornsden/pixie
 [hallo-mod]:<:kriegerbund:352935520579616768> **Hallo Kriegerbund!** <:kriegerbund:352935520579616768>
 
 Ich bin der neue, hauseigene Kriegerbund-Bot.
@@ -64,7 +64,6 @@ Für die Horde! <:horde:334814213828771850>
 [unknown-lang]:Unknown language selected. Try `{0.prefix}languages list`
 [lang-changed]:User language set to: 
 [quotes-added]:Added quote:
-
 [quotes-none]:No quotes were added yet :(
 [quotes-out-of-range]:This quote does not exist yet :(
 [quotes-help]:```Usage:
@@ -79,3 +78,7 @@ Für die Horde! <:horde:334814213828771850>
 
   {0.prefix}zitat all: Lists all quotes.```
 [no-permissions]:You don't have the required permissions for that action!
+[server-help]:```Usage:
+
+  {0.prefix}server setwelcome #channel```
+[channel-set]:Channel '{0.mention}' set as {1}.

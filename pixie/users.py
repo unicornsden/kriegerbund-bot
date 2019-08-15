@@ -1,11 +1,10 @@
-import os
 import discord
-import pickle
-from . import messages
-from . import utils
-from . import data
+import datetime
+import pixie.data as data
+from pixie.data import DataStorage
 
-USERPREFIX = '/user_'
+import pixie.messages as messages
+
 
 def cmd_user(message, args):
     if len(args) == 0:
@@ -29,61 +28,44 @@ def set_language(message, lang):
     if not data.exists_lang(lang):
         messages.send_message(message, 'unknown-lang')
         return
-    user = DiscordUser(id=message.author.id)
-    user.data.lang = lang
-    user.store_user_settings()
+    user = get_user(message)
+    user.lang = lang
+    user.store_settings()
     messages.send_custom_message(message, messages.get_string('lang-changed') +
         lang)
 
+
 def get_language(message):
-    user = DiscordUser(id=message.author.id)
-    user.read_user_settings()
-    return user.data.lang
+    return get_user(message).lang
 
 
-class UserData:
-    dummy = ''
+def get_user(message):
+    user = data.CACHE.get_user(message.user_id)
+    if user is None:
+        user = DiscordUser(id=message.author.id)
+        user.read_settings()
+        data.CACHE.add_user(user)
+    return user
+
+
+class DiscordUser(data.DataStorage):
+    PATHPREFIX = 'user_'
     lang = 'en'
 
-
-class DiscordUser:
-
-    def __init__(self, user=None, id=None):
+    def __init__(self, user=None, id=None, no_files=False):
         if (user is None and id is None) or (user is not None and id is not None):
-            raise ValueError("Please supply either a value for user or a value for id")
-        if user is not None and isinstance(user, discord.User):
-            self.id = user.id
+            raise ValueError('user or id arguments required')
+        elif user is not None and isinstance(user, discord.User):
+            self.set('id', user.id)
         elif id is not None and isinstance(id, int):
-            self.id = id
-        self.data = UserData()
+            self.set('id', id)
+        super(DiscordUser, self).__init__(no_files=no_files)
 
-    def get_path(self, file=False):
-        if file:
-            return self.get_path() + 'data.txt'
-        return data.DATAPATH + USERPREFIX + str(self.id) + '/'
-
-    def settings_exist(self, create_if_not_exists=False):
-        settings_path = self.get_path(True)
-        if os.path.isfile(settings_path):
-            return True
-        elif create_if_not_exists:
-            self.store_user_settings()
-
-    def read_user_settings(self):
-        path = self.get_path()
-        if not os.path.exists(path):
-            os.makedirs(path)
-            self.settings_exist(True)
+    def read_settings(self):
+        try:
+            self.read_data()
+        except FileNotFoundError:
             return
-        if not self.settings_exist(True):
-            return
-        with open(self.get_path(True), 'rb') as input:
-            self.data = pickle.load(input)
 
-    def store_user_settings(self):
-        path = self.get_path()
-        if not os.path.exists(path):
-            os.makedirs(path)
-        with open(self.get_path(True), 'wb') as output:
-            pickle.dump(self.data, output, pickle.HIGHEST_PROTOCOL)
-
+    def store_settings(self):
+        self.write_data()
