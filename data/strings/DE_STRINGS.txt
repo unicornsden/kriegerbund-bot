@@ -1,6 +1,8 @@
 [unknown-args]: Falscher Gebrauch von `{command}`, versuche `{command} help`
 [ping]: Pong, aber auf Deutsch!
-[welcome-message]: ```+++ Neues Mitglied +++```
+[welcome-message]: ```prolog
++++ Neues Mitglied +++
+```
 **Herzlich Willkommen** auf dem Kriegerbund-Server, {0.mention}!<:pepe:233617653879537664>
 
 Stell dich doch direkt einmal hier, im {1.mention} vor.
