@@ -10,4 +10,4 @@ https://media.giphy.com/media/3o6gDQhjc1TAcHyuAM/giphy.gif
 [join-message]:
 Willkommen auf dem Kriegerbund-Server, {0.mention}! <:kriegerbund:352935520579616768>
 
-Bevor du loslegst, lies dir ersteinmal die Regeln in <#563863577270681625> durch. Wenn du das getan hast, melde dich bei einem <@&223109873271832576>, damit du auf den Rest des Servers zugriff bekommst!
+Bevor du loslegst, lies dir ersteinmal die Regeln in <#563863577270681625> durch. Wenn du das getan hast, melde dich bei einem Moderator oder Admin, damit du auf den Rest des Servers zugriff bekommst!
