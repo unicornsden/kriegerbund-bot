@@ -223,7 +223,7 @@ def handle_commands(message):
     elif command == 'classic':
         td = datetime.datetime(2019, 8, 27) - datetime.datetime.now()
         d = str(td.days)
-        h = str(round(td.seconds/3600))
+        h = str(round(td.seconds/3600) - 2)
         m = str(round((td.seconds/60) % 60))
         s = str(round(td.seconds % 60))
         msg = 'Zeit bis zum ... **CLASSIC LAUNCH**:\n' \
