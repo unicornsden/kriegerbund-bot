@@ -8,6 +8,7 @@ Pixie Message Handling
 from pixie import data
 from pixie import users
 from pixie import servers
+import math
 import asyncio
 import datetime
 from pixie.dev import cmd_dev
@@ -223,9 +224,9 @@ def handle_commands(message):
     elif command == 'classic':
         td = datetime.datetime(2019, 8, 27) - datetime.datetime.now()
         d = str(td.days)
-        h = str(round(td.seconds/3600) - 2)
-        m = str(round((td.seconds/60) % 60))
-        s = str(round(td.seconds % 60))
+        h = str(math.floor(td.seconds/3600) - 2)
+        m = str(math.floor((td.seconds/60) % 60))
+        s = str(math.floor(td.seconds % 60))
         msg = 'Zeit bis zum ... **CLASSIC LAUNCH**:\n' \
               '**{0}** Tage, **{1}** Stunden, **{2}** Minuten und **{3}** Sekunden!'.format(d, h, m, s)
         code = send_custom_message(message, msg)
