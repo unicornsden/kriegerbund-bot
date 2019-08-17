@@ -9,6 +9,7 @@ from pixie import data
 from pixie import users
 from pixie import servers
 import asyncio
+import datetime
 from pixie.dev import cmd_dev
 from pixie.dice import cmd_dice
 from pixie.quotes import cmd_quotes
@@ -219,9 +220,17 @@ def handle_commands(message):
         code = send_message(message, 'hallo')
     elif command == 'server':
         code = cmd_server(message, args)
+    elif command == 'classic':
+        td = datetime.datetime(2019, 8, 27) - datetime.datetime.now()
+        d = str(td.days)
+        h = str(round(td.seconds/3600))
+        m = str(round((td.seconds/60) % 60))
+        s = str(round(td.seconds % 60))
+        msg = 'Zeit bis zum ... **CLASSIC LAUNCH**:\n' \
+              '**{0}** Tage, **{1}** Stunden, **{2}** Minuten und **{3}** Sekunden!'.format(d, h, m, s)
+        code = send_custom_message(message, msg)
     else:
         code = send_message(message, message.command)
-
     if code == MessageCode.UNKNOWN_ARGS:
         code = send_message(message, 'unknown-args')
 
