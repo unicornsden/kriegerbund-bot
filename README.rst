@@ -10,6 +10,7 @@ requirements
 - Python3.6 or later
 - discord.py
 - PyGithub
+- docker
 
 setup
 ==========
