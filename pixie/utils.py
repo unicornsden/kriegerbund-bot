@@ -1,11 +1,14 @@
 import discord
 
+
 def check_permissions(message, admin=False):
-    """
-    Checks the permissions of user calling function.
+    """Checks the permissions of user calling function.
     If user has guild administrator permissions or permissions in the channel to kick users, return true
-    :param message: discord.message object
-    :param admin: boolean
+
+    :param message: The message to check for an author.
+    :type message: :class:`messages.MessageWrapper`
+    :param admin: Check for admin privileges instead if True
+    :type admin: bool
     :return: boolean
     """
     if admin and isinstance(message.author, discord.Member):
@@ -19,23 +22,23 @@ def check_permissions(message, admin=False):
 
 
 def get_server_id(message):
-    """
-    Gets the server (guild) id and returns it as string
-    :param message: discord.message object
-    :return: string
+    """Gets the server (guild) id and returns it as string
+
+    :param message: The message to get the guild from.
+    :type message: :class:`messages.MessageWrapper`
+    :return: The server id as a string. TODO: FIX PRIVATE MESSAGES
+    :return type: string
     """
     return str(message.guild.id)
 
 
-def ping(message):
-    return "Pong!"
-
-
 def represents_int(s):
-    """
-    Checks if given value is a valid integer
+    """Checks if given value is a valid integer
+
     :param s: Number or string to be checked
-    :return: boolean
+    :type s: Any.
+    :return: True if the input can be cast to int. False otherwise.
+    :return type: boolean
     """
     try:
         int(s)
