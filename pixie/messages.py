@@ -113,8 +113,11 @@ def get_command(message, prefixes):
 def get_args(message):
     """
     Gets the arguments from a message's contents. Arguments are all strings separated by ' ' after the first.
-    :param message: MessageWrapper to read from
-    :return: list() of args
+
+    :param message: message to read from
+    :type message: :class:`messages.MessageWrapper`
+    :return: list of all args
+    :return type: list(str)
     """
     return message.content.split(' ')[1:]
 
@@ -122,7 +125,8 @@ def get_args(message):
 def send_custom_message(message, msg, dm=False, user=None, format_content=True):
     """send_custom_message
     Sends a message with custom text.
-    :param message: MessageWrapper object with data for formatting.
+    :param message: message with data for formatting.
+    :type message: :class:`messages.MessageWrapper`
     :param msg: str() contents to send.
     :param dm: [Optional] Whether the message should be send as a dm.
     :param user: [Optional] Sends the message to a custom user. Requires

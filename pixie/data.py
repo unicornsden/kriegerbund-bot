@@ -251,7 +251,7 @@ class DataStorage:
             pass
 
     def set_sequence(self, var_name, var_type, var_value):
-        """TODO: CAN ONLY HANDLE STRING SEQUENCES
+        """TODO: CAN ONLY HANDLE STRING SEQUENCES, or maybe not
 
         :param var_name:
         :param var_type:
