@@ -25,17 +25,16 @@ def random_quote(message):
     quotes = get_quotes(message)
     if len(quotes) == 0:
         return messages.send_message(message, 'quotes-none')
-    messages.send_custom_message(message, quotes[random.randrange(0,
-        len(quotes),1)])
+    messages.send_custom_message(message, quotes[random.randrange(0, len(quotes), 1)])
 
 
 def add_quote(quote_list, message):
     if not utils.check_permissions(message):
         messages.send_message(message, 'no-permissions')
     if not os.path.isfile(data.get_path(message, "quotes")):
-        f = open(data.get_path(message, "quotes"),'w+')
+        f = open(data.get_path(message, "quotes"), 'w+')
     else:
-        f = open(data.get_path(message, "quotes"),'a+')
+        f = open(data.get_path(message, "quotes"), 'a+')
     quote = ""
     for s in quote_list:
         quote += s + ' '
@@ -53,8 +52,8 @@ def cmd_quotes(message, args):
     if args[0] == "all":
         quotes = get_quotes(message)
         msg = ""
-        for idx, q in enumerate(quotes):
-            msg += str(idx + 1) + ': ' + q + '\n\n'
+        for index, q in enumerate(quotes):
+            msg += str(index + 1) + ': ' + q + '\n\n'
         messages.send_custom_message(message, msg.strip())
     if utils.represents_int(args[0]):
         quotes = get_quotes(message)
