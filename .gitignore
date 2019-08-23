@@ -111,3 +111,4 @@ bot-token
 *.swo
 debug_log
 test_helper.py
+error_log

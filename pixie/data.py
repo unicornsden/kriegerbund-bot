@@ -10,48 +10,44 @@ import datetime
 from pixie.utils import get_server_id
 from pixie import utils
 
-DATAPATH = './data/'
 
+class Data:
+    DATAPATH = './data/'
+    CACHE = None
+    STRINGS = None
+    LANG_ALTS = None
+    LANG_NAME = None
+    STORAGEPATH = None
+    CMDCHARS = None
+    REPO_OWNER = None
+    REPO_NAME = None
 
-def init():
-    """Initializes the global data vars. Most will be read from files or set to a default.
-    / TODO: MORE GRANULARITY & BETTER DESCRIPTIONS
-    """
-    global CACHE
-    global STRINGS
-    global LANG_ALTS
-    global LANG_NAME
-    global STORAGEPATH
-    global CMDCHARS
-    global REPO_OWNER
-    global REPO_NAME
+    def init():
+        Data.CMDCHARS = ['~', 'ü!']
+        Data.REPO_OWNER = 'unicornsden'
+        Data.REPO_NAME = 'pixie'
+        string_path = Data.DATAPATH + '/strins/'
 
-    CMDCHARS = ['$', '~', 'ü!']
-    REPO_OWNER = 'unicornsden'
-    REPO_NAME = 'pixie'
+        Data.LANG_ALTS = dict()
+        Data.LANG_NAME = dict()
+        Data.STRINGS = dict()
 
-    string_path = DATAPATH + 'strings/'
+        # Read inbuilt
+        for f in os.listdir(string_path):
+            if f.endswith('_STRINGS.txt'):
+                s = str()
+                lang = f.split('_STRINGS.txt')[0].lower()
+                tup = read_key_value_pairs(string_path + f)
+                Data.STRINGS[lang] = tup[0]
+                if s.strip() != '':
+                    Data.LANG_NAME[lang] = get_lang_alts(tup[1],
+                            Data.LANG_ALTS, lang)
 
-    LANG_ALTS = dict()
-    LANG_NAME = dict()
-    STRINGS = dict()
-
-    # Read inbuilt
-    for f in os.listdir(string_path):
-        if f.endswith('_STRINGS.txt'):
-            s = str()
-            lang = f.split('_STRINGS.txt')[0].lower()
-            tup = read_key_value_pairs(string_path + f)
-            STRINGS[lang] = tup[0]
-            if s.strip() != '':
-                LANG_NAME[lang] = get_lang_alts(tup[1], LANG_ALTS, lang)
-
-    if os.path.isfile(DATAPATH + "datapath"):
-        with open(DATAPATH + 'datapath', 'r') as f:
-            STORAGEPATH = f.read().strip()
-    else:
-        STORAGEPATH = '/storage'
-    print(STORAGEPATH)
+        if os.path.isfile(Data.DATAPATH + "datapath"):
+            with open(Data.DATAPATH + 'datapath', 'r') as f:
+                Data.STORAGEPATH = f.read().strip()
+        else:
+            Data.STORAGEPATH = '/storage'
 
 
 def get_lang_alts(string, output, lang):
@@ -80,7 +76,7 @@ def exists_lang(lang):
     :return: True if it exists, False otherwise
     :return type: bool
     """
-    if lang.lower() in STRINGS:
+    if lang.lower() in Data.STRINGS:
         return True
     else:
         return False
@@ -97,7 +93,7 @@ def get_path(message, name):
     :return: path to file
     :return type: str
     """
-    path = STORAGEPATH + '/' + get_server_id(message) + '_' + name + '.txt'
+    path = Data.STORAGEPATH + '/' + get_server_id(message) + '_' + name + '.txt'
     return path
 
 
@@ -176,7 +172,7 @@ class DataStorage:
     def get_path(self, file=False):
         if file:
             return self.get_path() + 'settings.dust'
-        return STORAGEPATH + self.PATHPREFIX + str(self.id) + '/'
+        return Data.STORAGEPATH + self.PATHPREFIX + str(self.id) + '/'
 
     def get(self, name):
         self.last_call = datetime.datetime.now()
