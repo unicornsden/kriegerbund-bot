@@ -10,8 +10,6 @@ import datetime
 from pixie.utils import get_server_id
 from pixie import utils
 
-DATAPATH = './data/'
-
 def init():
     """Initializes the global data vars. Most will be read from files or set to a default.
     / TODO: MORE GRANULARITY & BETTER DESCRIPTIONS
@@ -54,7 +52,6 @@ def init():
         STORAGEPATH = '/storage'
     print(STORAGEPATH)
 
-
 def get_lang_alts(string, output, lang):
     """ Gets the language alts from a string. / TODO: MORE GENERAL, MAYBE WRONG MODULE
 
@@ -81,7 +78,7 @@ def exists_lang(lang):
     :return: True if it exists, False otherwise
     :return type: bool
     """
-    if lang.lower() in STRINGS:
+    if lang.lower() in Data.STRINGS:
         return True
     else:
         return False
@@ -98,7 +95,7 @@ def get_path(message, name):
     :return: path to file
     :return type: str
     """
-    path = STORAGEPATH + '/' + get_server_id(message) + '_' + name + '.txt'
+    path = Data.STORAGEPATH + '/' + get_server_id(message) + '_' + name + '.txt'
     return path
 
 
@@ -179,7 +176,7 @@ class DataStorage:
     def get_path(self, file=False):
         if file:
             return self.get_path() + 'settings.dust'
-        return STORAGEPATH + self.PATHPREFIX + str(self.id) + '/'
+        return Data.STORAGEPATH + self.PATHPREFIX + str(self.id) + '/'
 
     def get(self, name):
         self.last_call = datetime.datetime.now()

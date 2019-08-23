@@ -112,3 +112,4 @@ database.ini
 *.swo
 debug_log
 test_helper.py
+error_log
