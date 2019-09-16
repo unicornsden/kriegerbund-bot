@@ -1,4 +1,4 @@
-from github import Github
+import github
 from github import GithubObject
 from pixie import messages
 from pixie import data

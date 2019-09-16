@@ -12,10 +12,10 @@ from pixie import utils
 
 DATAPATH = './data/'
 
-
 def init():
     """Initializes the global data vars. Most will be read from files or set to a default.
     / TODO: MORE GRANULARITY & BETTER DESCRIPTIONS
+    Schatti: Oh god please no global variables
     """
     global CACHE
     global STRINGS
@@ -25,6 +25,7 @@ def init():
     global CMDCHARS
     global REPO_OWNER
     global REPO_NAME
+    global DATAPATH
 
     CMDCHARS = ['$', '~', 'ü!']
     REPO_OWNER = 'unicornsden'
@@ -154,6 +155,8 @@ class Test:
         pass
 
 
+"""
+/ TODO: Jill pls remove that foo?!"""
 class DataStorage:
     PATHPREFIX = ''
     foo = ''

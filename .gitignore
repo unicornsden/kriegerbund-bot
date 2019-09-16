@@ -106,6 +106,7 @@ storage/
 datapath
 github-token
 bot-token
+database.ini
 .idea/
 *.swp
 *.swo
