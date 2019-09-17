@@ -13,10 +13,11 @@ CREATE TABLE "pb_bot" (
     FOREIGN KEY (server_id) REFERENCES pb_server(server_id)
 );
 CREATE TABLE "pb_user" (
-    "user_id" SERIAL PRIMARY KEY,
+    "user_id" SERIAL,
     "user_name" VARCHAR NOT NULL,
     "user_discord_id" VARCHAR NULL,
-    "user_creationdate" TIMESTAMP DEFAULT NOW()
+    "user_creationdate" TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (user_id)
 );
 CREATE TABLE "pb_quotes" (
     "quotes_id" SERIAL,
