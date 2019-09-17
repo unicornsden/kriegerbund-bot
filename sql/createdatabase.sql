@@ -1,4 +1,4 @@
-pb_userCREATE TABLE "pb_server" (
+CREATE TABLE "pb_server" (
     "server_id" SERIAL,
     "server_name" VARCHAR NOT NULL,
     "server_creationdate" TIMESTAMP DEFAULT NOW(),
@@ -26,7 +26,7 @@ CREATE TABLE "pb_quotes" (
     "user_id" INTEGER NOT NULL, 
     "server_id" INTEGER NOT NULL,
     "quote_creationdate" TIMESTAMP DEFAULT NOW(),
-    PRIMARY KEY (quote_id),
+    PRIMARY KEY (quotes_id),
     FOREIGN KEY (server_id) REFERENCES pb_server(server_id),
     FOREIGN KEY (user_id) REFERENCES pb_user(user_id)
 
