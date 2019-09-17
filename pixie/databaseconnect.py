@@ -20,10 +20,8 @@ from pixie import core
 
 def read_database_config():
     """This function creates the file path for the database credentials, tries to open it. it returns a 1 if the file
-    wasn't found, otherwise the file gets parsed into a dictionary and then into a DatabaseCredential Object which
-    is returned
-    :rtype: object
-
+    wasn't found, otherwise the file gets parsed into a string and gets returned
+    :rtype: str
     """
     file = Path(os.path.dirname(data.__file__)).parent
     file = os.path.relpath(file)
@@ -41,15 +39,18 @@ def read_database_config():
         # read config file
         parser.read(file)
         # get section
-        database_data = {}
+        credentials = {}
         if parser.has_section(section):
 
             params = parser.items(section)
             for param in params:
-                database_data[param[0]] = param[1]
+                credentials[param[0]] = param[1]
         else:
             print("section not found in the database.ini file")
-        return database_data
+        #buildastring thing
+        stringcredentials = 'host="' + credentials['host'] + '", user="' + credentials['user'] + '", password="' + \
+                            credentials['password'] + '", dbname="' + credentials['database'] + '"'
+        return stringcredentials
 
 
 def establish_database_connection():
@@ -57,14 +58,6 @@ def establish_database_connection():
     otherwise, a database connection is created and a cursor returned
     """
     credentials = read_database_config()
-    print(credentials)
-    print(credentials['host'])
-
-    # buildastring
-
-    stringcredentials = 'host="' + credentials['host'] + '", user="' + credentials['user'] + '", password="' + \
-                        credentials['password'] + '", dbname="' + credentials['database'] + '"'
-    print(stringcredentials)
 
     if credentials == 1:
         print("No credentials found")
@@ -73,7 +66,7 @@ def establish_database_connection():
     conn = None
     try:
         # create connection
-        conn = psycopg2.connect(stringcredentials)
+        conn = psycopg2.connect(credentials)
         # create cursor for doing things
         cur = conn.cursor()
         return cur
@@ -86,4 +79,3 @@ def print_version(cursor):
     print('PostgresSQL database version:')
 
     cursor.execute('SELECT version()')
-
