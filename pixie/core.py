@@ -11,6 +11,7 @@ import sys
 import traceback
 from pixie import messages
 from pixie import data
+from pixie.data import Data
 from pixie import debug
 from pixie import cache
 from pixie import servers
@@ -27,20 +28,20 @@ def run_bot(token=None):
     :param token: Token supplied from non-default source, other wise data.DATAPATH/tokens/bot-token will be used
     :type token: str, optional
     """
-    data.init()
-    data.CACHE = cache.init()
+    Data.init()
+    Data.CACHE = cache.init()
 
     if token is not None:
-        data.TOKEN = token.strip()
+        Data.TOKEN = token.strip()
     if len(sys.argv) >= 2:
-        data.TOKEN = sys.argv[1].strip()
-    elif os.path.isfile(data.DATAPATH + 'tokens/bot-token'):
+        Data.TOKEN = sys.argv[1].strip()
+    elif os.path.isfile(Data.DATAPATH + 'tokens/bot-token'):
         with open(data.DATAPATH + 'tokens/bot-token', 'r') as f:
-            data.TOKEN = f.read().strip()
+            Data.TOKEN = f.read().strip()
     else:
         sys.exit("No TOKEN supplied")
 
-    client.run(data.TOKEN)
+    client.run(Data.TOKEN)
 
 
 @client.event
@@ -84,7 +85,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    command = messages.get_command(message, data.CMDCHARS)
+    command = messages.get_command(message, Data.CMDCHARS)
     message.get_server_data()
 
     # Don't do anything if there was no valid command.
