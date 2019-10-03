@@ -113,3 +113,9 @@ database.ini
 debug_log
 test_helper.py
 error_log
+
+# rust
+*/Cargo.lock
+*/target/
+*.iml
+*.idea
