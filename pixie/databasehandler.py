@@ -2,37 +2,24 @@
 Pixie Database Connection
 ===================
 | Database module. Contains all functions for establishing a database connection.
+| How to use: Create DatabaseHandler Object
+| DatabaseHandler.cursor.execute('SELECT * FROM *')
+| results = DatabaseHandler.cursor.fetchall()
+| print(results) #or do other things
 """
-import json
-import pathlib
 import os.path
-import github
 import psycopg2.extras
 from pathlib import Path
 from configparser import ConfigParser
-
 import psycopg2
-from psycopg2.extensions import cursor
-
-from pixie.utils import get_server_id
-from pixie import utils
 from pixie import data
-from pixie import core
 
 
 class DatabaseHandler:
     cursor = None
 
     def __init__(self):
-        credentials = self.read_config()
-        conn = None
-        try:
-            # create connection
-            conn = psycopg2.connect(credentials)
-            # create cursor for doing things
-            self.cursor = conn.cursor()
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
+        self.cursor = self.establish_database_connection()
 
     def read_config(self):
         """This function creates the file path for the database credentials, tries to open it. it returns a 1 if the file
@@ -54,7 +41,6 @@ class DatabaseHandler:
             # get section
             credentials = {}
             if parser.has_section(section):
-
                 params = parser.items(section)
                 # what the fuck do i do here?
                 for param in params:
@@ -62,11 +48,9 @@ class DatabaseHandler:
             else:
                 print("section not found in the database.ini file")
             # buildastring thing
-           # stringcredentials = 'host="' + credentials['host'] + '", user="' + credentials['user'] + '", password="' + \
-           #                     credentials['password'] + '", dbname="' + credentials['database'] + '"'
-            stringcredentials = 'hostaddr=' + credentials['host'] + ' port=' + credentials['port'] + ' user=' + credentials['user'] + ' password=' + \
-                                    credentials['password'] + ' dbname=' + credentials['database'] + ''
-            print(stringcredentials)
+            stringcredentials = 'hostaddr=' + credentials['host'] + ' port=' + credentials['port'] + ' user=' + \
+                                credentials['user'] + ' password=' + \
+                                credentials['password'] + ' dbname=' + credentials['database'] + ''
             return stringcredentials
         except FileNotFoundError:
             print("database.ini file not found")
@@ -88,16 +72,8 @@ class DatabaseHandler:
             print(error)
             return 1
 
-
     def print_version(self):
         print('PostgresSQL database version:')
         self.cursor.execute('SELECT version()')
         result = self.cursor.fetchall()
         print(result)
-
-""" For Debugging in console
-from pixie import data
-from pixie import databasehandler
-import psycopg2
-db = databasehandler.DatabaseHandler()
-"""
